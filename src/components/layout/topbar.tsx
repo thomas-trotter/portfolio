@@ -2,14 +2,7 @@
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const navItems = [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Projects", href: "/projects" },
-    { label: "Blog", href: "/blog" },
-    { label: "Contact", href: "/contact" },
-] as const;
+import { topbarLinks } from "@/lib/site";
 
 export default function TopBar() {
 
@@ -29,16 +22,16 @@ export default function TopBar() {
                 </Link>
 
                 <ul className="hidden items-center gap-[30px] md:flex">
-                    {navItems.map((navItem) => (
-                        <li key={navItem.href}>
+                    {topbarLinks.map((link) => (
+                        <li key={link.href}>
                             <Link
-                                href={navItem.href}
+                                href={link.href}
                                 className={classNames(
                                     "text-sm font-medium transition-colors",
-                                    pathname === navItem.href ? "text-accent" : "text-ink hover:text-accent"
+                                    pathname === link.href ? "text-accent" : "text-ink hover:text-accent"
                                 )}
                             >
-                                {navItem.label}
+                                {link.label}
                             </Link>
                         </li>
                     ))}
