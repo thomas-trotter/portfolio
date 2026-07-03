@@ -1,9 +1,10 @@
-import PageLayout from "@/components/layout/page-layout"
+import PageLayout from "@/components/layout/page-layout";
+import ProjectsGridSection from "@/components/sections/projects-grid-section";
 
 export default function ProjectsPage() {
-    return (
-        <PageLayout>
-            <p>Projects</p>
-        </PageLayout>
-    )
+  return (
+    <PageLayout>
+      <ProjectsGridSection />
+    </PageLayout>
+  );
 }
