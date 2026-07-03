@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import classNames from "classnames";
 import BlogPostListItem from "@/components/cards/blog-post-list-item";
 import Section from "@/components/ui/section";
-import { blogPosts, POSTS_PER_PAGE } from "@/lib/blog";
+import { blogPosts, POSTS_PER_PAGE } from "@/lib/mocks/blog";
 
 export default function BlogListSection() {
   const [query, setQuery] = useState("");
