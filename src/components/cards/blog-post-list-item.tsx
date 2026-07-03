@@ -1,0 +1,39 @@
+import Link from "next/link";
+import Placeholder from "@/components/ui/placeholder";
+import type { BlogPostSummary } from "@/lib/blog";
+
+type BlogPostListItemProps = {
+  post: BlogPostSummary;
+};
+
+export default function BlogPostListItem({ post }: BlogPostListItemProps) {
+  const content = (
+    <>
+      <Placeholder className="h-[100px] w-full shrink-0 sm:w-[150px]">
+        [ thumb ]
+      </Placeholder>
+      <div className="min-w-0 flex-1">
+        <h2 className="mb-1.5 text-lg font-semibold">{post.title}</h2>
+        <p className="mb-2 font-mono text-xs text-muted">
+          {post.date} · {post.readTime}
+        </p>
+        <p className="text-sm leading-[1.7] text-ink/80">{post.excerpt}</p>
+      </div>
+    </>
+  );
+
+  if (post.href) {
+    return (
+      <Link
+        href={post.href}
+        className="flex flex-col gap-5 transition-opacity hover:opacity-90 sm:flex-row"
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <article className="flex flex-col gap-5 sm:flex-row">{content}</article>
+  );
+}
