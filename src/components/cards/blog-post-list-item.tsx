@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Placeholder from "@/components/ui/placeholder";
-import type { BlogPostSummary } from "@/lib/mocks/blog";
+import { blogPostHref, type BlogPostSummary } from "@/lib/mocks/blog";
 
 type BlogPostListItemProps = {
   post: BlogPostSummary;
@@ -22,18 +22,12 @@ export default function BlogPostListItem({ post }: BlogPostListItemProps) {
     </>
   );
 
-  if (post.href) {
-    return (
-      <Link
-        href={post.href}
-        className="flex flex-col gap-5 transition-opacity hover:opacity-90 sm:flex-row"
-      >
-        {content}
-      </Link>
-    );
-  }
-
   return (
-    <article className="flex flex-col gap-5 sm:flex-row">{content}</article>
+    <Link
+      href={blogPostHref(post.id)}
+      className="flex flex-col gap-5 transition-opacity hover:opacity-90 sm:flex-row"
+    >
+      {content}
+    </Link>
   );
 }
