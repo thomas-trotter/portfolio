@@ -29,6 +29,13 @@ export const blogPosts: readonly BlogPostSummary[] = [
     readTime: "3 min read",
     excerpt: "[Short excerpt of the post content, one to two lines.]",
   },
+  {
+    slug: "making-sense-of-complex-data",
+    title: "[Post title goes here]",
+    date: "Jan 12, 2026",
+    readTime: "4 min read",
+    excerpt: "[Short excerpt of the post content, one to two lines.]",
+  }
 ];
 
 export const POSTS_PER_PAGE = 3;
