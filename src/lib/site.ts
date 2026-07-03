@@ -3,6 +3,7 @@ export const site = {
   tagline:
     "MSci AI student — aspiring ML / software engineer building thoughtful, well-crafted systems.",
   copyrightYear: 2026,
+  skills: ["Python", "PyTorch", "React", "TypeScript", "SQL", "AWS"],
 } as const;
 
 export const topbarLinks = [
