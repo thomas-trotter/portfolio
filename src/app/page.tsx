@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <PageLayout>
       <HeroSection />
-      <FeaturedProjectsSection />
+      {/* <FeaturedProjectsSection /> */}
       <SkillsSection />
     </PageLayout>
   );

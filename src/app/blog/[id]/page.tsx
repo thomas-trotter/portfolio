@@ -12,9 +12,9 @@ export function generateStaticParams() {
 }
 
 export default async function BlogPostDetailPage({
-  params,
+  params: _params,
 }: BlogPostDetailPageProps) {
-  const { id } = await params;
+  /*const { id } = await params;
   const post = getBlogPostById(id);
 
   if (!post) {
@@ -25,5 +25,6 @@ export default async function BlogPostDetailPage({
     <PageLayout>
       <BlogPostDetailSection post={post} />
     </PageLayout>
-  );
+  );*/
+  return notFound();
 }

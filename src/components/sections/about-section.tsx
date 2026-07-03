@@ -1,18 +1,25 @@
+import Image from "next/image";
 import Link from "next/link";
-import Button from "@/components/ui/button";
 import Card from "@/components/ui/card";
 import Pill from "@/components/ui/pill";
-import Placeholder from "@/components/ui/placeholder";
 import Section from "@/components/ui/section";
 import { about } from "@/lib/mocks/about";
+import { site } from "@/lib/mocks/site";
 
 export default function AboutSection() {
   return (
     <div className="flex flex-col md:flex-row">
       <aside className="w-full shrink-0 border-b border-border px-8 py-8 md:sticky md:top-0 md:w-60 md:self-start md:border-b-0 md:border-r">
-        <Placeholder className="mb-4 h-[150px] w-full rounded-[10px]">
-          [ photo ]
-        </Placeholder>
+        <div className="relative mx-auto mb-4 aspect-square w-full max-w-[180px] overflow-hidden rounded-full bg-surface">
+          <Image
+            src={about.photoSrc}
+            alt={`Photo of ${site.name}`}
+            fill
+            className="object-cover object-top"
+            sizes="(max-width: 768px) 100vw, 240px"
+            priority
+          />
+        </div>
 
         <p className="mb-1.5 font-mono text-xs text-muted">
           📍 {about.location}
@@ -24,14 +31,14 @@ export default function AboutSection() {
           ✅ {about.availability}
         </p>
 
-        <Button
+        {/*<Button
           variant="outline"
           href={about.cvHref}
           className="w-full px-0 py-2.5 text-[13px]"
         >
           Download CV
         </Button>
-
+        */}
         <div className="mt-4 flex flex-wrap gap-2">
           {about.profileLinks.map((link) => (
             <Link key={link.label} href={link.href} className="tag-muted">
