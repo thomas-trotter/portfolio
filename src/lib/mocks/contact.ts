@@ -1,10 +1,9 @@
+import { profileLinks } from "@/lib/constants";
+
 export const contact = {
   intro:
-    "[A short line inviting people to reach out — about internships, collaboration, or just to chat.]",
-  email: "email@example.com",
-  location: "[City, Country]",
-  profileLinks: [
-    { label: "GitHub", href: "#" },
-    { label: "LinkedIn", href: "#" },
-  ],
+    "Open to internship opportunities and collaborations — get in touch.",
+  email: "thomas.trotter2006@gmail.com",
+  location: "London, UK",
+  profileLinks: profileLinks,
 } as const;
