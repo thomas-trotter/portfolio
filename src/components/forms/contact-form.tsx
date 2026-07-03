@@ -1,4 +1,4 @@
-export default function ContactFormSection() {
+export default function ContactForm() {
   return (
     <form className="flex flex-1 flex-col gap-3.5">
           <input
