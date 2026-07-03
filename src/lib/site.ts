@@ -5,6 +5,14 @@ export const site = {
   copyrightYear: 2026,
 } as const;
 
+export const topbarLinks = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
+] as const;
+
 export const footerLinks = [
   { label: "GitHub", href: "#" },
   { label: "LinkedIn", href: "#" },
