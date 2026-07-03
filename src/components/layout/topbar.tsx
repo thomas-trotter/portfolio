@@ -2,7 +2,7 @@
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { topbarLinks } from "@/lib/site";
+import { topbarLinks, site } from "@/lib/site";
 
 export default function TopBar() {
 
@@ -18,7 +18,7 @@ export default function TopBar() {
                     href="/"
                     className="text-xl font-bold tracking-[-0.02em] text-ink"
                 >
-                    Thomas Trotter
+                    {site.name}
                 </Link>
 
                 <ul className="hidden items-center gap-[30px] md:flex">
