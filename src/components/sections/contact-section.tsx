@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Section from "@/components/ui/section";
-import ContactFormSection from "@/components/sections/contact-form-section";
+import ContactForm from "@/components/forms/contact-form";
 
 import { contact } from "@/lib/mocks/contact";
 
@@ -36,7 +36,7 @@ export default function ContactSection() {
           </div>
         </div>
 
-        {/*<ContactFormSection />*/}
+        <ContactForm />
       </div>
     </Section>
   );
