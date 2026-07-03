@@ -89,7 +89,43 @@
       hover:opacity-90;
   }
 
-  /* Form input — 1.5px warm border as in the final wireframes */
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-lg border-[1.5px]
+      border-ink px-[26px] py-[13px] text-[15px] font-semibold text-ink
+      transition-colors hover:bg-surface;
+  }
+
+  .card {
+    @apply rounded-xl border border-border bg-white p-[18px];
+  }
+
+  .placeholder {
+    @apply flex items-center justify-center rounded-[10px] border border-input
+      p-2 text-center font-mono text-[11px] text-muted;
+    background: repeating-linear-gradient(
+      45deg,
+      oklch(0.95 0.006 90),
+      oklch(0.95 0.006 90) 9px,
+      oklch(0.915 0.006 90) 9px,
+      oklch(0.915 0.006 90) 18px
+    );
+  }
+
+  .tag-muted {
+    @apply font-mono text-[11px] inline-flex items-center rounded-full
+      border border-input px-2.5 py-1 text-muted;
+    letter-spacing: 0;
+  }
+
+  .pill {
+    @apply inline-flex items-center rounded-full border border-input px-[18px]
+      py-[7px] text-[13px] font-medium text-muted;
+  }
+
+  .pill-active {
+    @apply border-accent bg-accent text-white;
+  }
+
   .input {
     @apply w-full rounded-lg bg-background px-4 py-2.5 text-body text-ink
       placeholder:text-faint;
