@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Placeholder from "@/components/ui/placeholder";
-import type { BlogPostSummary } from "@/lib/blog";
+import type { BlogPostSummary } from "@/lib/mocks/blog";
 
 type BlogPostListItemProps = {
   post: BlogPostSummary;

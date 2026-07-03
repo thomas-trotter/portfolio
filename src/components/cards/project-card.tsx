@@ -2,7 +2,7 @@ import Link from "next/link";
 import Card from "@/components/ui/card";
 import Placeholder from "@/components/ui/placeholder";
 import Tag from "@/components/ui/tag";
-import type { ProjectSummary } from "@/lib/projects";
+import { projectHref, type ProjectSummary } from "@/lib/mocks/projects";
 
 type ProjectCardProps = {
   project: ProjectSummary;
@@ -28,13 +28,12 @@ export default function ProjectCard({
     </>
   );
 
-  if (project.href) {
-    return (
-      <Link href={project.href} className="block transition-opacity hover:opacity-90">
-        <Card>{content}</Card>
-      </Link>
-    );
-  }
-
-  return <Card>{content}</Card>;
+  return (
+    <Link
+      href={projectHref(project.id)}
+      className="block transition-opacity hover:opacity-90"
+    >
+      <Card>{content}</Card>
+    </Link>
+  );
 }

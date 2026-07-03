@@ -2,7 +2,7 @@
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { topbarLinks, site } from "@/lib/site";
+import { topbarLinks, site } from "@/lib/mocks/site";
 
 export default function TopBar() {
 

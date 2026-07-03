@@ -4,7 +4,7 @@ import Card from "@/components/ui/card";
 import Pill from "@/components/ui/pill";
 import Placeholder from "@/components/ui/placeholder";
 import Section from "@/components/ui/section";
-import { about } from "@/lib/about";
+import { about } from "@/lib/mocks/about";
 
 export default function AboutSection() {
   return (

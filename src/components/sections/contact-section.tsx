@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Section from "@/components/ui/section";
-import { contact } from "@/lib/contact";
+import { contact } from "@/lib/mocks/contact";
 
 export default function ContactSection() {
   return (
