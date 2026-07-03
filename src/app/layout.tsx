@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import classNames from "classnames";
+import { rootMetadata } from "@/lib/metadata";
 import "./globals.css";
 
 const jakartaSans = Plus_Jakarta_Sans({
@@ -13,10 +14,7 @@ const jetBrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
 })
 
-export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Thomas' Portfolio",
-};
+export const metadata: Metadata = rootMetadata;
 
 export default function RootLayout({
   children,
