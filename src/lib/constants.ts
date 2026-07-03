@@ -6,8 +6,10 @@ export const skills = [
     "Software Development",
 ] as const;
 
+export const email = "thomas.trotter2006@gmail.com";
+
 export const profileLinks = [
     { label: "GitHub", href: "https://github.com/thomas-trotter/" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/thomas-trotter/" },
-    { label: "Email", href: "mailto:thomas.trotter2006@gmail.com" },
+    { label: "Email", href: `mailto:${email}` },
 ] as const;
