@@ -61,7 +61,7 @@ export default function BlogListSection() {
         )}
         {paginatedPosts.map((post, index) => (
           <div
-            key={post.slug}
+            key={post.id}
             className={classNames(
               "border-b border-border pb-5.5",
               index < paginatedPosts.length - 1 ? "mb-5.5" : "border-b-0 pb-0",
