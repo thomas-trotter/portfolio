@@ -15,7 +15,7 @@ export const about = {
   cvHref: "/cv.pdf",
   intro: [
     "I'm an MSci Artificial Intelligence student at King's College London, drawn to AI/ML through building projects. I'm seeking a summer 2026 internship where I can contribute to real ML or software projects and learn from experienced engineers.",
-    "I learn best by building. My flagship project is a production-ready FastAPI service for AI-powered object detection using the DETR transformer, with Docker, testing, and full documentation — plus smaller projects like a Connect4 AI. I care about shipping things properly, not just making them work",
+    "I learn best by building. My flagship project is a production-ready FastAPI service for AI-powered object detection using the DETR transformer, with Docker, testing, and full documentation — plus smaller projects like a Connect4 AI. I care about shipping things properly, not just making them work.",
   ],
   skills: skills,
   profileLinks: profileLinks,
