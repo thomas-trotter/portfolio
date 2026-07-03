@@ -1,6 +1,6 @@
 import ProjectCard from "@/components/cards/project-card";
 import Section from "@/components/ui/section";
-import { featuredProjects } from "@/lib/projects";
+import { featuredProjects } from "@/lib/mocks/projects";
 
 export default function FeaturedProjectsSection() {
   return (
@@ -9,8 +9,8 @@ export default function FeaturedProjectsSection() {
         Featured projects
       </h2>
       <div className="grid gap-[22px] md:grid-cols-3">
-        {featuredProjects.map((project, index) => (
-          <ProjectCard key={index} project={project} />
+        {featuredProjects.map((project) => (
+          <ProjectCard key={project.id} project={project} />
         ))}
       </div>
     </Section>
