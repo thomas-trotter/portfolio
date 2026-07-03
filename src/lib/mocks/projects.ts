@@ -18,6 +18,7 @@ export type ProjectDetail = {
   description: string;
   tags: readonly ProjectTag[];
   categories: readonly ProjectCategory[];
+  featured: boolean;
   role: string;
   tools: readonly string[];
   links: readonly ProjectLink[];
@@ -53,6 +54,7 @@ export const projectFilters: readonly ProjectFilter[] = [
 export const allProjects: readonly ProjectDetail[] = [
   {
     id: "1",
+    featured: true,
     name: "[Project Name]",
     description: "Short description of the project.",
     tags: [
@@ -64,6 +66,7 @@ export const allProjects: readonly ProjectDetail[] = [
   },
   {
     id: "2",
+    featured: true,
     name: "[Project Name]",
     description: "Short description of the project.",
     tags: [
@@ -76,6 +79,7 @@ export const allProjects: readonly ProjectDetail[] = [
   },
   {
     id: "3",
+    featured: true,
     name: "[Project Name]",
     description: "Short description of the project.",
     tags: [{ label: "Research", variant: "accent" }],
@@ -85,6 +89,7 @@ export const allProjects: readonly ProjectDetail[] = [
   },
   {
     id: "4",
+    featured: false,
     name: "[Project Name]",
     description: "Short description of the project.",
     tags: [{ label: "ML", variant: "accent" }],
@@ -93,6 +98,7 @@ export const allProjects: readonly ProjectDetail[] = [
   },
   {
     id: "5",
+    featured: false,
     name: "[Project Name]",
     description: "Short description of the project.",
     tags: [{ label: "Web", variant: "accent" }],
@@ -102,6 +108,7 @@ export const allProjects: readonly ProjectDetail[] = [
   },
   {
     id: "6",
+    featured: false,
     name: "[Project Name]",
     description: "Short description of the project.",
     tags: [
@@ -113,7 +120,7 @@ export const allProjects: readonly ProjectDetail[] = [
   },
 ];
 
-export const featuredProjects = allProjects.slice(0, 3);
+export const featuredProjects = allProjects.filter((project) => project.featured).slice(0, 3)
 
 export function getProjectById(id: string): ProjectDetail | undefined {
   return allProjects.find((project) => project.id === id);
