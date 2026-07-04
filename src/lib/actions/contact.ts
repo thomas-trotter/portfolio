@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { Resend } from "resend";
+import { site } from "@/.velite";
 import { contactSchema } from "@/lib/validation";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -36,7 +37,7 @@ export async function sendContactEmail(
 
   const { error } = await resend.emails.send({
     from: FROM_ADDRESS,
-    to: email,
+    to: site.email,
     replyTo: email,
     subject: `[Portfolio] ${subject}`,
     text: `From: ${name} <${email}>\n\n${message}`,
