@@ -1,14 +1,17 @@
 import Link from "next/link";
 import ContentImage from "@/components/ui/content-image";
-import { blogPostHref, type BlogPostSummary } from "@/lib/content";
+import type { BlogPostSummary } from "@/lib/content";
 
 type BlogPostListItemProps = {
   post: BlogPostSummary;
 };
 
 export default function BlogPostListItem({ post }: BlogPostListItemProps) {
-  const content = (
-    <>
+  return (
+    <Link
+      href={post.permalink}
+      className="flex flex-col gap-5 transition-opacity hover:opacity-90 sm:flex-row"
+    >
       <ContentImage
         src={post.coverSrc}
         alt={`Cover image for ${post.title}`}
@@ -22,15 +25,6 @@ export default function BlogPostListItem({ post }: BlogPostListItemProps) {
         </p>
         <p className="text-sm leading-[1.7] text-ink/80">{post.excerpt}</p>
       </div>
-    </>
-  );
-
-  return (
-    <Link
-      href={blogPostHref(post.slug)}
-      className="flex flex-col gap-5 transition-opacity hover:opacity-90 sm:flex-row"
-    >
-      {content}
     </Link>
   );
 }
