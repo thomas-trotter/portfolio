@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Placeholder from "@/components/ui/placeholder";
+import ContentImage from "@/components/ui/content-image";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
 import type { ProjectDetail } from "@/lib/mocks/projects";
@@ -56,9 +56,12 @@ export default function ProjectDetailSection({
           {project.name}
         </h1>
 
-        <Placeholder className="mb-[26px] h-[220px]">
-          [ hero screenshot / demo ]
-        </Placeholder>
+        <ContentImage
+          src={project.heroSrc}
+          alt={`Hero screenshot of ${project.name}`}
+          className="mb-[26px] h-[220px]"
+          fallbackLabel="[ hero screenshot / demo ]"
+        />
 
         <h2 className="mb-[18px] text-[21px] font-semibold tracking-[-0.01em]">
           Overview
@@ -74,9 +77,12 @@ export default function ProjectDetailSection({
           {project.problemApproach}
         </p>
 
-        <Placeholder className="mt-4 h-[160px]">
-          [ diagram / screenshot ]
-        </Placeholder>
+        <ContentImage
+          src={project.diagramSrc}
+          alt={`Diagram for ${project.name}`}
+          className="mt-4 h-[160px]"
+          fallbackLabel="[ diagram / screenshot ]"
+        />
       </Section>
     </div>
   );

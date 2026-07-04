@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Placeholder from "@/components/ui/placeholder";
+import ContentImage from "@/components/ui/content-image";
 import { blogPostHref, type BlogPostSummary } from "@/lib/mocks/blog";
 
 type BlogPostListItemProps = {
@@ -9,9 +9,12 @@ type BlogPostListItemProps = {
 export default function BlogPostListItem({ post }: BlogPostListItemProps) {
   const content = (
     <>
-      <Placeholder className="h-[100px] w-full shrink-0 sm:w-[150px]">
-        [ thumb ]
-      </Placeholder>
+      <ContentImage
+        src={post.coverSrc}
+        alt={`Cover image for ${post.title}`}
+        className="h-[100px] w-full shrink-0 sm:w-[150px]"
+        fallbackLabel="[ thumb ]"
+      />
       <div className="min-w-0 flex-1">
         <h2 className="mb-1.5 text-lg font-semibold">{post.title}</h2>
         <p className="mb-2 font-mono text-xs text-muted">

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Placeholder from "@/components/ui/placeholder";
+import ContentImage from "@/components/ui/content-image";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
 import {
@@ -7,6 +7,7 @@ import {
   getRelatedPosts,
   type BlogPostDetail,
 } from "@/lib/mocks/blog";
+import { about } from "@/lib/mocks/about";
 import { site } from "@/lib/mocks/site";
 
 type BlogPostDetailSectionProps = {
@@ -35,7 +36,12 @@ export default function BlogPostDetailSection({
         {post.date} · {post.readTime}
       </p>
 
-      <Placeholder className="mb-6 h-[220px]">[ cover image ]</Placeholder>
+      <ContentImage
+        src={post.coverSrc}
+        alt={`Cover image for ${post.title}`}
+        className="mb-6 h-[220px]"
+        fallbackLabel="[ cover image ]"
+      />
 
       {post.body.map((paragraph, index) => (
         <div key={index}>
@@ -43,9 +49,12 @@ export default function BlogPostDetailSection({
             {paragraph}
           </p>
           {index === 1 && (
-            <Placeholder className="my-[18px] h-[130px]">
-              [ inline image / code block ]
-            </Placeholder>
+            <ContentImage
+              src={post.inlineSrc}
+              alt={`Inline image for ${post.title}`}
+              className="my-[18px] h-[130px]"
+              fallbackLabel="[ inline image / code block ]"
+            />
           )}
         </div>
       ))}
@@ -59,9 +68,12 @@ export default function BlogPostDetailSection({
       </div>
 
       <div className="mb-8 flex gap-3.5 border-t border-border pt-[22px]">
-        <Placeholder className="h-[46px] w-[46px] shrink-0 rounded-full">
-          me
-        </Placeholder>
+        <ContentImage
+          src={about.photoSrc}
+          alt={`Photo of ${site.name}`}
+          className="h-[46px] w-[46px] shrink-0 rounded-full"
+          fallbackLabel="me"
+        />
         <div>
           <p className="text-sm font-semibold">{site.name}</p>
           <p className="font-mono text-xs text-muted">MSci AI student</p>
@@ -78,7 +90,12 @@ export default function BlogPostDetailSection({
             href={blogPostHref(relatedPost.id)}
             className="min-w-0 flex-1 transition-opacity hover:opacity-90"
           >
-            <Placeholder className="mb-2 h-20">[ thumb ]</Placeholder>
+            <ContentImage
+              src={relatedPost.coverSrc}
+              alt={`Cover image for ${relatedPost.title}`}
+              className="mb-2 h-20"
+              fallbackLabel="[ thumb ]"
+            />
             <p className="text-sm font-semibold">{relatedPost.title}</p>
           </Link>
         ))}

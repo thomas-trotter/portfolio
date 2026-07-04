@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Card from "@/components/ui/card";
-import Placeholder from "@/components/ui/placeholder";
+import ContentImage from "@/components/ui/content-image";
 import Tag from "@/components/ui/tag";
 import { projectHref, type ProjectSummary } from "@/lib/mocks/projects";
 
@@ -13,7 +13,12 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const content = (
     <>
-      <Placeholder className="mb-3.5 h-[120px]">[ project screenshot ]</Placeholder>
+      <ContentImage
+        src={project.thumbnailSrc}
+        alt={`Screenshot of ${project.name}`}
+        className="mb-3.5 h-[120px]"
+        fallbackLabel="[ project screenshot ]"
+      />
       <h3 className="mb-1.5 font-semibold">{project.name}</h3>
       <p className="mb-2.5 text-[13px] leading-[1.7] text-ink/80">
         {project.description}
