@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+
 import PageLayout from "@/components/layout/page-layout";
 import BlogPostDetailSection from "@/components/sections/blog-post-detail-section";
 import { getBlogPostBySlug } from "@/lib/content";
