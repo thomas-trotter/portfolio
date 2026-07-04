@@ -1,8 +1,10 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
-import { sendContactEmail, type ContactState } from "@/lib/actions/contact";
+import { Check, CircleAlert } from "lucide-react";
 import classNames from "classnames";
+
+import { sendContactEmail, type ContactState } from "@/lib/actions/contact";
 
 function FieldError({ message }: { message: string }) {
   return (
@@ -18,7 +20,7 @@ export default function ContactForm() {
     sendContactEmail,
     { ok: false } as ContactState,
   );
-  
+
   const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
@@ -30,8 +32,8 @@ export default function ContactForm() {
   if (showSuccess && state.ok) {
     return (
       <div className="flex flex-1 flex-col items-start gap-3.5 rounded-[10px] border border-[oklch(0.7_0.1_150)] bg-[oklch(0.94_0.05_150)] p-7">
-        <div className="flex size-11 items-center justify-center rounded-full bg-[oklch(0.4_0.1_150)] text-xl text-white">
-          ✓
+        <div className="flex size-11 items-center justify-center rounded-full bg-[oklch(0.4_0.1_150)] text-white">
+          <Check className="size-5" strokeWidth={2.5} aria-hidden />
         </div>
         <p className="text-lg font-bold text-[oklch(0.25_0.05_150)]">
           Message sent
@@ -55,7 +57,10 @@ export default function ContactForm() {
     <form className="flex flex-1 flex-col gap-3.5" action={action}>
       {state.message && !state.ok && (
         <div className="flex items-start gap-2.5 rounded-lg border border-[oklch(0.7_0.15_25)] bg-[oklch(0.95_0.04_25)] px-3.5 py-3">
-          <span className="font-bold text-[oklch(0.45_0.15_25)]">!</span>
+          <CircleAlert
+            className="size-4 shrink-0 text-[oklch(0.45_0.15_25)]"
+            aria-hidden
+          />
           <p className="m-0 text-[13px] leading-[1.7] text-[oklch(0.35_0.1_25)]">
             {state.message}
           </p>
