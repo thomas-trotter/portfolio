@@ -12,9 +12,9 @@ export function generateStaticParams() {
 }
 
 export default async function ProjectDetailPage({
-  params: _params,
+  params,
 }: ProjectDetailPageProps) {
-  /*const { id } = await params;
+  const { id } = await params;
   const project = getProjectById(id);
 
   if (!project) {
@@ -25,6 +25,5 @@ export default async function ProjectDetailPage({
     <PageLayout>
       <ProjectDetailSection project={project} />
     </PageLayout>
-  );*/
-  return notFound();
+  );
 }

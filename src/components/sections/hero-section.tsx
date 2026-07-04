@@ -12,9 +12,9 @@ export default function HeroSection() {
         {site.tagline}
       </p>
       <div className="flex flex-wrap items-center justify-center gap-4">
-        {/*<Button variant="primary" href="/projects" className="px-[26px] py-[13px]">
+        <Button variant="primary" href="/projects" className="px-[26px] py-[13px]">
           View projects
-        </Button>*/}
+        </Button>
         <Button variant="outline" href="/contact">
           Contact me
         </Button>
