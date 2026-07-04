@@ -4,15 +4,9 @@ import { useActionState, useEffect, useState } from "react";
 import { Check, CircleAlert } from "lucide-react";
 import classNames from "classnames";
 
+import FieldError from "@/components/ui/field-error";
 import { sendContactEmail, type ContactState } from "@/lib/actions/contact";
 
-function FieldError({ message }: { message: string }) {
-  return (
-    <p className="-mt-2 font-mono text-[13px] text-[oklch(0.45_0.15_25)]">
-      {message}
-    </p>
-  );
-}
 
 export default function ContactForm() {
   
