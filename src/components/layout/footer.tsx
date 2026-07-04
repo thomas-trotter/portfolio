@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { footerLinks, site } from "@/lib/mocks/site";
+import { site } from "@/.velite";
 
 export default function Footer() {
   return (
@@ -11,7 +11,7 @@ export default function Footer() {
         aria-label="Social"
         className="flex items-center gap-[30px] text-[13px] font-medium"
       >
-        {footerLinks.map((link) => (
+        {site.profileLinks.map((link) => (
           <Link
             key={link.label}
             href={link.href}

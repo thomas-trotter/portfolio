@@ -2,25 +2,20 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { Check, CircleAlert } from "lucide-react";
-import classNames from "classnames";
-
-import FieldError from "@/components/ui/field-error";
+import FormField from "@/components/ui/form-field";
 import { sendContactEmail, type ContactState } from "@/lib/actions/contact";
 
+const initialState: ContactState = { ok: false };
 
 export default function ContactForm() {
-  
-  const [state, action, isPending] = useActionState<ContactState, FormData>(
+  const [state, action, isPending] = useActionState(
     sendContactEmail,
-    { ok: false } as ContactState,
+    initialState,
   );
-
   const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
-    if (state.ok) {
-      setShowSuccess(true);
-    }
+    if (state.ok) setShowSuccess(true);
   }, [state.ok]);
 
   if (showSuccess && state.ok) {
@@ -61,47 +56,30 @@ export default function ContactForm() {
         </div>
       )}
 
-      <input
-        type="text"
+      <FormField
         name="name"
         placeholder="Name"
-        className={classNames("input", {
-          "border-[oklch(0.55_0.18_25)]": !!state.errors?.name,
-        })}
+        error={state.errors?.name}
         autoComplete="name"
       />
-      {state.errors?.name && <FieldError message={state.errors.name[0]} />}
-
-      <input
-        type="email"
+      <FormField
         name="email"
+        type="email"
         placeholder="Email"
-        className={classNames("input", {
-          "border-[oklch(0.55_0.18_25)]": !!state.errors?.email,
-        })}
+        error={state.errors?.email}
         autoComplete="email"
       />
-      {state.errors?.email && <FieldError message={state.errors.email[0]} />}
-
-      <input
-        type="text"
+      <FormField
         name="subject"
         placeholder="Subject"
-        className={classNames("input", {
-          "border-[oklch(0.55_0.18_25)]": !!state.errors?.subject,
-        })}
+        error={state.errors?.subject}
       />
-      {state.errors?.subject && <FieldError message={state.errors.subject[0]} />}
-
-      <textarea
+      <FormField
         name="message"
         placeholder="Message"
-        rows={4}
-        className={classNames("input", {
-          "border-[oklch(0.55_0.18_25)]": !!state.errors?.message,
-        }, "min-h-[90px] resize-y")}
+        error={state.errors?.message}
+        multiline
       />
-      {state.errors?.message && <FieldError message={state.errors.message[0]} />}
 
       <input name="website" className="hidden" tabIndex={-1} autoComplete="off" />
 

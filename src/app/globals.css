@@ -67,6 +67,22 @@
 }
 
 @layer components {
+  .title-display {
+    @apply text-[2.375rem] font-bold leading-[1.15] tracking-[-0.02em] text-ink;
+  }
+
+  .page-title {
+    @apply mb-3.5 text-[2.375rem] font-bold leading-[1.15] tracking-[-0.02em] text-ink;
+  }
+
+  .section-heading {
+    @apply mb-[18px] text-[21px] font-semibold tracking-[-0.01em];
+  }
+
+  .back-link {
+    @apply block font-mono text-xs text-muted transition-colors hover:text-ink;
+  }
+
   .section-label {
     @apply text-label uppercase text-muted;
   }
