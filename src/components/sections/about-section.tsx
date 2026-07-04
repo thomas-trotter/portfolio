@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CircleCheck, GraduationCap, MapPin } from "lucide-react";
 import Card from "@/components/ui/card";
 import Pill from "@/components/ui/pill";
 import Section from "@/components/ui/section";
@@ -21,14 +22,17 @@ export default function AboutSection() {
           />
         </div>
 
-        <p className="mb-1.5 font-mono text-xs text-muted">
-          📍 {about.location}
+        <p className="mb-1.5 flex items-center gap-1.5 font-mono text-xs text-muted">
+          <MapPin className="size-3 shrink-0" aria-hidden />
+          {about.location}
         </p>
-        <p className="mb-1.5 font-mono text-xs text-muted">
-          🎓 {about.education}
+        <p className="mb-1.5 flex items-center gap-1.5 font-mono text-xs text-muted">
+          <GraduationCap className="size-3 shrink-0" aria-hidden />
+          {about.education}
         </p>
-        <p className="mb-[18px] font-mono text-xs text-muted">
-          ✅ {about.availability}
+        <p className="mb-[18px] flex items-center gap-1.5 font-mono text-xs text-muted">
+          <CircleCheck className="size-3 shrink-0" aria-hidden />
+          {about.availability}
         </p>
 
         {/*<Button
