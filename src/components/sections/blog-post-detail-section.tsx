@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { MDXContent, blogMdxComponents } from "@/components/mdx";
+import BackLink from "@/components/ui/back-link";
 import ContentImage from "@/components/ui/content-image";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
 import {
-  blogPostHref,
   getAboutPage,
   getRelatedPosts,
   type BlogPostDetail,
@@ -23,16 +23,11 @@ export default function BlogPostDetailSection({
 
   return (
     <Section className="mx-auto max-w-[600px]">
-      <Link
-        href="/blog"
-        className="mb-[18px] block font-mono text-xs text-muted transition-colors hover:text-ink"
-      >
+      <BackLink href="/blog" className="mb-[18px]">
         ← Back to blog
-      </Link>
+      </BackLink>
 
-      <h1 className="mb-3.5 text-[2.375rem] font-bold leading-[1.15] tracking-[-0.02em] text-ink">
-        {post.title}
-      </h1>
+      <h1 className="page-title">{post.title}</h1>
 
       <p className="mb-6 font-mono text-xs text-muted">
         {post.date} · {post.readTime}
@@ -68,14 +63,12 @@ export default function BlogPostDetailSection({
         </div>
       </div>
 
-      <h2 className="mb-[18px] text-[21px] font-semibold tracking-[-0.01em]">
-        More posts
-      </h2>
+      <h2 className="section-heading">More posts</h2>
       <div className="flex gap-[26px]">
         {relatedPosts.map((relatedPost) => (
           <Link
             key={relatedPost.slug}
-            href={blogPostHref(relatedPost.slug)}
+            href={relatedPost.permalink}
             className="min-w-0 flex-1 transition-opacity hover:opacity-90"
           >
             <ContentImage
