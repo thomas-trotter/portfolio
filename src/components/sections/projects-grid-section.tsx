@@ -14,12 +14,17 @@ export default function ProjectsGridSection() {
   const [activeFilter, setActiveFilter] = useState<ProjectFilter>("All");
 
   const filteredProjects = useMemo(() => {
-    return activeFilter === "All" ? allProjects : allProjects.filter((project) => project.categories.includes(activeFilter));
+    if (activeFilter === "All") {
+      return allProjects;
+    }
+    return allProjects.filter((project) => 
+      project.categories.includes(activeFilter)
+    );
   }, [activeFilter]);
 
   return (
     <Section>
-      <h1 className="mb-3.5 text-[2.375rem] font-bold leading-[1.15] tracking-[-0.02em] text-ink">
+      <h1 className="page-title">
         Projects
       </h1>
       <p className="mb-6.5 text-base leading-relaxed text-muted">
