@@ -1,7 +1,9 @@
+import AdminTopBar from "@/components/admin/admin-topbar";
+
 export default function AdminDashboardPage() {
     return (
         <div>
-            <h1>Admin Dashboard</h1>
+            <AdminTopBar />
         </div>
     )
 }
