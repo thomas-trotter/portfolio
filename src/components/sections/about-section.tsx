@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CircleCheck, GraduationCap, MapPin } from "lucide-react";
 import { MDXContent, aboutMdxComponents } from "@/components/mdx";
 import Card from "@/components/ui/card";
+import DetailSidebar from "@/components/ui/detail-sidebar";
 import Pill from "@/components/ui/pill";
 import Section from "@/components/ui/section";
 import { getAboutPage } from "@/lib/content";
@@ -13,7 +14,7 @@ export default function AboutSection() {
 
   return (
     <div className="flex flex-col md:flex-row">
-      <aside className="w-full shrink-0 border-b border-border px-8 py-8 md:sticky md:top-0 md:w-60 md:self-start md:border-b-0 md:border-r">
+      <DetailSidebar>
         <div className="relative mx-auto mb-4 aspect-square w-full max-w-[180px] overflow-hidden rounded-full bg-surface">
           <Image
             src={about.photoSrc}
@@ -53,27 +54,21 @@ export default function AboutSection() {
             </Link>
           ))}
         </div>
-      </aside>
+      </DetailSidebar>
 
       <Section className="min-w-0 flex-1">
-        <h1 className="mb-3.5 text-[2.375rem] font-bold leading-[1.15] tracking-[-0.02em] text-ink">
-          About me
-        </h1>
+        <h1 className="page-title">About me</h1>
 
         <MDXContent code={about.code} components={aboutMdxComponents} />
 
-        <h2 className="mb-[18px] text-[21px] font-semibold tracking-[-0.01em]">
-          Skills
-        </h2>
+        <h2 className="section-heading">Skills</h2>
         <div className="mb-7 flex flex-wrap gap-2.5">
           {about.skills.map((skill) => (
             <Pill key={skill}>{skill}</Pill>
           ))}
         </div>
 
-        <h2 className="mb-[18px] text-[21px] font-semibold tracking-[-0.01em]">
-          Experience
-        </h2>
+        <h2 className="section-heading">Experience</h2>
         <div className="flex flex-col gap-3">
           {about.experience.map((entry) => (
             <Card key={`${entry.company}-${entry.year}`}>
