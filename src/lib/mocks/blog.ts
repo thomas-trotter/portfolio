@@ -9,13 +9,15 @@ export type BlogPostDetail = {
   date: string;
   readTime: string;
   excerpt: string;
+  coverSrc: string;
+  inlineSrc?: string;
   body: readonly string[];
   tags: readonly BlogPostTag[];
 };
 
 export type BlogPostSummary = Pick<
   BlogPostDetail,
-  "id" | "title" | "date" | "readTime" | "excerpt"
+  "id" | "title" | "date" | "readTime" | "excerpt" | "coverSrc"
 >;
 
 const placeholderBody = [
@@ -36,6 +38,7 @@ export const blogPosts: readonly BlogPostDetail[] = [
     date: "Jan 12, 2026",
     readTime: "4 min read",
     excerpt: "[Short excerpt of the post content, one to two lines.]",
+    coverSrc: "/placeholder.svg",
     body: placeholderBody,
     tags: placeholderTags,
   },
@@ -45,6 +48,7 @@ export const blogPosts: readonly BlogPostDetail[] = [
     date: "Dec 2, 2025",
     readTime: "6 min read",
     excerpt: "[Short excerpt of the post content, one to two lines.]",
+    coverSrc: "/placeholder.svg",
     body: placeholderBody,
     tags: placeholderTags,
   },
@@ -54,6 +58,7 @@ export const blogPosts: readonly BlogPostDetail[] = [
     date: "Oct 20, 2025",
     readTime: "3 min read",
     excerpt: "[Short excerpt of the post content, one to two lines.]",
+    coverSrc: "/placeholder.svg",
     body: placeholderBody,
     tags: placeholderTags,
   },
@@ -63,6 +68,7 @@ export const blogPosts: readonly BlogPostDetail[] = [
     date: "Jan 12, 2026",
     readTime: "4 min read",
     excerpt: "[Short excerpt of the post content, one to two lines.]",
+    coverSrc: "/placeholder.svg",
     body: placeholderBody,
     tags: placeholderTags,
   },
