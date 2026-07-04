@@ -1,6 +1,6 @@
 import Pill from "@/components/ui/pill";
 import Section from "@/components/ui/section";
-import { site } from "@/lib/mocks/site";
+import { site } from "@/lib/site";
 
 export default function SkillsSection() {
   return (

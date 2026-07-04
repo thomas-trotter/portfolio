@@ -8,7 +8,7 @@ import {
   allProjects,
   projectFilters,
   type ProjectFilter,
-} from "@/lib/mocks/projects";
+} from "@/lib/content";
 
 export default function ProjectsGridSection() {
   const [activeFilter, setActiveFilter] = useState<ProjectFilter>("All");
@@ -44,7 +44,7 @@ export default function ProjectsGridSection() {
 
       <div className="grid gap-[22px] md:grid-cols-3">
         {filteredProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+          <ProjectCard key={project.slug} project={project} />
         ))}
       </div>
     </Section>

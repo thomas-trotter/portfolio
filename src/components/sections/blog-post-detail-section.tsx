@@ -1,14 +1,15 @@
 import Link from "next/link";
+import { MDXContent, blogMdxComponents } from "@/components/mdx";
 import ContentImage from "@/components/ui/content-image";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
 import {
   blogPostHref,
+  getAboutPage,
   getRelatedPosts,
   type BlogPostDetail,
-} from "@/lib/mocks/blog";
-import { about } from "@/lib/mocks/about";
-import { site } from "@/lib/mocks/site";
+} from "@/lib/content";
+import { site } from "@/lib/site";
 
 type BlogPostDetailSectionProps = {
   post: BlogPostDetail;
@@ -17,7 +18,8 @@ type BlogPostDetailSectionProps = {
 export default function BlogPostDetailSection({
   post,
 }: BlogPostDetailSectionProps) {
-  const relatedPosts = getRelatedPosts(post.id);
+  const relatedPosts = getRelatedPosts(post.slug);
+  const about = getAboutPage();
 
   return (
     <Section className="mx-auto max-w-[600px]">
@@ -43,21 +45,7 @@ export default function BlogPostDetailSection({
         fallbackLabel="[ cover image ]"
       />
 
-      {post.body.map((paragraph, index) => (
-        <div key={index}>
-          <p className="mb-3.5 text-[15px] leading-[1.7] text-ink/80">
-            {paragraph}
-          </p>
-          {index === 1 && (
-            <ContentImage
-              src={post.inlineSrc}
-              alt={`Inline image for ${post.title}`}
-              className="my-[18px] h-[130px]"
-              fallbackLabel="[ inline image / code block ]"
-            />
-          )}
-        </div>
-      ))}
+      <MDXContent code={post.code} components={blogMdxComponents} />
 
       <div className="mb-[26px] mt-1 flex flex-wrap gap-2">
         {post.tags.map((tag) => (
@@ -86,8 +74,8 @@ export default function BlogPostDetailSection({
       <div className="flex gap-[26px]">
         {relatedPosts.map((relatedPost) => (
           <Link
-            key={relatedPost.id}
-            href={blogPostHref(relatedPost.id)}
+            key={relatedPost.slug}
+            href={blogPostHref(relatedPost.slug)}
             className="min-w-0 flex-1 transition-opacity hover:opacity-90"
           >
             <ContentImage

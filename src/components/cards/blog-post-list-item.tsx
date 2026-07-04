@@ -1,6 +1,6 @@
 import Link from "next/link";
 import ContentImage from "@/components/ui/content-image";
-import { blogPostHref, type BlogPostSummary } from "@/lib/mocks/blog";
+import { blogPostHref, type BlogPostSummary } from "@/lib/content";
 
 type BlogPostListItemProps = {
   post: BlogPostSummary;
@@ -27,7 +27,7 @@ export default function BlogPostListItem({ post }: BlogPostListItemProps) {
 
   return (
     <Link
-      href={blogPostHref(post.id)}
+      href={blogPostHref(post.slug)}
       className="flex flex-col gap-5 transition-opacity hover:opacity-90 sm:flex-row"
     >
       {content}

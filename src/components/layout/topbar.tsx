@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { topbarLinks, site } from "@/lib/mocks/site";
+import { topbarLinks, site } from "@/lib/site";
 
 export default function TopBar() {
 

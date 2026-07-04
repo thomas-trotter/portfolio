@@ -28,6 +28,7 @@ export default function ContentImage({
                 src={src}
                 alt={alt}
                 fill
+                loading="eager"
                 className="object-cover"
                 sizes="600px"
             />

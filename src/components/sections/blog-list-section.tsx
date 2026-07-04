@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import classNames from "classnames";
 import BlogPostListItem from "@/components/cards/blog-post-list-item";
 import Section from "@/components/ui/section";
-import { blogPosts, POSTS_PER_PAGE } from "@/lib/mocks/blog";
+import { blogPosts, POSTS_PER_PAGE } from "@/lib/content";
 
 export default function BlogListSection() {
   const [query, setQuery] = useState("");
@@ -61,7 +61,7 @@ export default function BlogListSection() {
         )}
         {paginatedPosts.map((post, index) => (
           <div
-            key={post.id}
+            key={post.slug}
             className={classNames(
               "border-b border-border pb-5.5",
               index < paginatedPosts.length - 1 ? "mb-5.5" : "border-b-0 pb-0",

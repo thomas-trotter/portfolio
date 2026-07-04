@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { MDXContent, projectMdxComponents } from "@/components/mdx";
 import ContentImage from "@/components/ui/content-image";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
-import type { ProjectDetail } from "@/lib/mocks/projects";
+import type { ProjectDetail } from "@/lib/content";
 
 type ProjectDetailSectionProps = {
   project: ProjectDetail;
@@ -63,19 +64,9 @@ export default function ProjectDetailSection({
           fallbackLabel="[ hero screenshot / demo ]"
         />
 
-        <h2 className="mb-[18px] text-[21px] font-semibold tracking-[-0.01em]">
-          Overview
-        </h2>
-        <p className="text-[15px] leading-[1.7] text-ink/80">
-          {project.overview}
-        </p>
-
-        <h2 className="mb-[18px] mt-[26px] text-[21px] font-semibold tracking-[-0.01em]">
-          Problem &amp; approach
-        </h2>
-        <p className="text-[15px] leading-[1.7] text-ink/80">
-          {project.problemApproach}
-        </p>
+        <div className="[&>h2:not(:first-child)]:mt-[26px]">
+          <MDXContent code={project.code} components={projectMdxComponents} />
+        </div>
 
         <ContentImage
           src={project.diagramSrc}

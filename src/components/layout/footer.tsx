@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { footerLinks, site } from "@/lib/mocks/site";
+import { footerLinks, site } from "@/lib/site";
 
 export default function Footer() {
   return (
