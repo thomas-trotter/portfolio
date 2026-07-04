@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { site } from "@/.velite";
 import { getBlogPostBySlug, getProjectBySlug } from "@/lib/content";
-import { siteUrl } from "@/lib/site";
+import { siteUrl } from "@/lib/config/site";
 
 export const defaultTitle = `${site.name} — ML / Software Engineer`;
 export const defaultDescription = site.tagline;

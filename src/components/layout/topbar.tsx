@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 import NavLink from "@/components/ui/nav-link";
 import { site } from "@/.velite";
-import { topbarLinks } from "@/lib/site";
+import { topbarLinks } from "@/lib/config/site";
 
 export default function TopBar() {
   const pathname = usePathname();

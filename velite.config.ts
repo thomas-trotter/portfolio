@@ -1,5 +1,5 @@
 import { defineCollection, defineConfig, s } from "velite";
-import { projectCategories } from "./src/lib/project-categories";
+import { projectCategories } from "./src/lib/config/project-categories";
 
 export { projectCategories };
 

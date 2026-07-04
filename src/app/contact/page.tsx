@@ -1,6 +1,6 @@
 import PageLayout from "@/components/layout/page-layout";
 import ContactSection from "@/components/sections/contact-section";
-import { createPageMetadata } from "@/lib/metadata";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = createPageMetadata({
   title: "Contact",

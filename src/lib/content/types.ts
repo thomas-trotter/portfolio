@@ -1,5 +1,5 @@
 import type { Project } from "@/.velite";
-import type { projectCategories } from "@/lib/project-categories";
+import type { projectCategories } from "@/lib/config/project-categories";
 
 export type ContentTag = {
   label: string;

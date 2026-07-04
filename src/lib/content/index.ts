@@ -1,5 +1,5 @@
 import { blog, pages, projects, site, type Blog, type Page, type Project } from "@/.velite";
-import { projectCategories } from "@/lib/project-categories";
+import { projectCategories } from "@/lib/config/project-categories";
 import type {
   AboutPage,
   BlogPostDetail,
