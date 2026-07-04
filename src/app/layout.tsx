@@ -25,11 +25,12 @@ export default function RootLayout({
     <html
       lang="en"
       className={classNames(
+        "min-h-dvh",
         jakartaSans.variable,
         jetBrainsMono.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="flex min-h-dvh flex-col">
         {children}
       </body>
     </html>
