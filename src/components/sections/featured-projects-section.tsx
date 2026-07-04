@@ -5,7 +5,7 @@ import { featuredProjects } from "@/lib/content";
 export default function FeaturedProjectsSection() {
   return (
     <Section className="pt-0">
-      <h2 className="mb-[18px] text-[21px] font-semibold tracking-[-0.01em]">
+      <h2 className="section-heading">
         Featured projects
       </h2>
       <div className="grid gap-[22px] md:grid-cols-3">
