@@ -1,5 +1,8 @@
 import { profileLinks, skills } from "@/lib/constants";
 
+export const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 export const site = {
   name: "Thomas Trotter",
   tagline:
@@ -16,6 +19,4 @@ export const topbarLinks = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
-export const footerLinks = [
-  ...profileLinks,
-] as const;
+export const footerLinks = profileLinks;

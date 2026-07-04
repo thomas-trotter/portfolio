@@ -1,90 +1,40 @@
 import { blog, pages, projects, type Blog, type Page, type Project } from "@/.velite";
 import { email, profileLinks, skills } from "@/lib/constants";
 import { projectCategories } from "@/lib/project-categories";
-
-const PLACEHOLDER_IMAGE = "/placeholder.svg";
-
-export type ContentTag = {
-  label: string;
-  variant: "accent" | "muted";
-};
-
-export type ProjectCategory = (typeof projectCategories)[number];
-export type ProjectFilter = "All" | ProjectCategory;
-
-export type ProjectLink = Project["links"][number];
-
-export type BlogPostDetail = {
-  slug: string;
-  title: string;
-  date: string;
-  readTime: string;
-  excerpt: string;
-  coverSrc: string;
-  code: string;
-  tags: readonly ContentTag[];
-  permalink: string;
-};
-
-export type BlogPostSummary = Pick<
+import type {
+  AboutPage,
   BlogPostDetail,
-  "slug" | "title" | "date" | "readTime" | "excerpt" | "coverSrc" | "permalink"
->;
-
-export type ProjectDetail = {
-  slug: string;
-  name: string;
-  description: string;
-  thumbnailSrc: string;
-  heroSrc: string;
-  diagramSrc: string;
-  tags: readonly ContentTag[];
-  categories: readonly ProjectCategory[];
-  featured: boolean;
-  role: string;
-  tools: readonly string[];
-  links: readonly ProjectLink[];
-  code: string;
-  permalink: string;
-};
-
-export type ProjectSummary = Pick<
+  BlogPostSummary,
+  ContactPage,
+  ContentTag,
   ProjectDetail,
-  "slug" | "name" | "description" | "tags" | "categories" | "thumbnailSrc" | "permalink"
->;
+  ProjectFilter,
+  ProjectSummary,
+} from "@/lib/content/types";
 
-export type Experience = {
-  role: string;
-  company: string;
-  year: string;
-  description: string;
-};
-
-export type AboutPage = {
-  photoSrc: string;
-  location: string;
-  education: string;
-  availability: string;
-  cvHref: string;
-  skills: readonly string[];
-  profileLinks: readonly { label: string; href: string }[];
-  experience: readonly Experience[];
-  code: string;
-};
-
-export type ContactPage = {
-  location: string;
-  email: string;
-  profileLinks: readonly { label: string; href: string }[];
-  code: string;
-};
+export type {
+  AboutPage,
+  BlogPostDetail,
+  BlogPostSummary,
+  ContactPage,
+  ContentTag,
+  Experience,
+  ProfileLink,
+  ProjectCategory,
+  ProjectDetail,
+  ProjectFilter,
+  ProjectLink,
+  ProjectSummary,
+} from "@/lib/content/types";
 
 export const POSTS_PER_PAGE = 3;
-
 export const projectFilters: readonly ProjectFilter[] = [
   "All",
   ...projectCategories,
 ];
+
+const PLACEHOLDER_IMAGE = "/placeholder.svg";
+const DEFAULT_HEADSHOT = "/headshot.png";
 
 function formatDisplayDate(isoDate: string): string {
   return new Date(isoDate).toLocaleDateString("en-US", {
@@ -94,7 +44,7 @@ function formatDisplayDate(isoDate: string): string {
   });
 }
 
-function mapTags(tags: readonly string[]): readonly ContentTag[] {
+function mapTags(tags: readonly string[]): ContentTag[] {
   return tags.map((label, index) => ({
     label,
     variant: index === 0 ? "accent" : "muted",
@@ -136,7 +86,7 @@ function mapProject(project: Project): ProjectDetail {
 
 function mapAboutPage(page: Page): AboutPage {
   return {
-    photoSrc: page.photoSrc ?? "/headshot.png",
+    photoSrc: page.photoSrc ?? DEFAULT_HEADSHOT,
     location: page.location ?? "",
     education: page.education ?? "",
     availability: page.availability ?? "",
@@ -161,11 +111,19 @@ function getPageBySlug(slug: string): Page | undefined {
   return pages.find((page) => page.slug === slug);
 }
 
-export const blogPosts: readonly BlogPostDetail[] = [...blog]
+function requirePage(slug: string): Page {
+  const page = getPageBySlug(slug);
+  if (!page) {
+    throw new Error(`${slug} page content not found.`);
+  }
+  return page;
+}
+
+export const blogPosts = [...blog]
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   .map(mapBlogPost);
 
-export const allProjects: readonly ProjectDetail[] = projects.map(mapProject);
+export const allProjects = projects.map(mapProject);
 
 export const featuredProjects = allProjects
   .filter((project) => project.featured)
@@ -187,17 +145,9 @@ export function getProjectBySlug(slug: string): ProjectDetail | undefined {
 }
 
 export function getAboutPage(): AboutPage {
-  const page = getPageBySlug("about");
-  if (!page) {
-    throw new Error("About page content not found.");
-  }
-  return mapAboutPage(page);
+  return mapAboutPage(requirePage("about"));
 }
 
 export function getContactPage(): ContactPage {
-  const page = getPageBySlug("contact");
-  if (!page) {
-    throw new Error("Contact page content not found.");
-  }
-  return mapContactPage(page);
+  return mapContactPage(requirePage("contact"));
 }

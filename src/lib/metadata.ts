@@ -1,21 +1,45 @@
 import type { Metadata } from "next";
 import { getBlogPostBySlug, getProjectBySlug } from "@/lib/content";
-import { site } from "@/lib/site";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+import { site, siteUrl } from "@/lib/site";
 
 export const defaultTitle = `${site.name} — ML / Software Engineer`;
 export const defaultDescription = site.tagline;
+
+type PageMetadataInput = {
+  title?: string;
+  description?: string;
+  path?: string;
+};
+
+type SlugMetadata = {
+  title: string;
+  description: string;
+  path: string;
+};
+
+function buildSocialMetadata(title: string, description: string, url?: string) {
+  return {
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: site.name,
+      locale: "en_GB" as const,
+      type: "website" as const,
+    },
+    twitter: {
+      card: "summary" as const,
+      title,
+      description,
+    },
+  };
+}
 
 export function createPageMetadata({
   title,
   description = defaultDescription,
   path = "",
-}: {
-  title?: string;
-  description?: string;
-  path?: string;
-} = {}): Metadata {
+}: PageMetadataInput = {}): Metadata {
   const pageTitle = title ?? defaultTitle;
   const url = `${siteUrl}${path}`;
 
@@ -23,29 +47,13 @@ export function createPageMetadata({
     title,
     description,
     alternates: path ? { canonical: url } : undefined,
-    openGraph: {
-      title: pageTitle,
-      description,
-      url,
-      siteName: site.name,
-      locale: "en_GB",
-      type: "website",
-    },
-    twitter: {
-      card: "summary",
-      title: pageTitle,
-      description,
-    },
+    ...buildSocialMetadata(pageTitle, description, url),
   };
 }
 
 async function createSlugPageMetadata(
   params: Promise<{ slug: string }>,
-  resolve: (slug: string) => {
-    title: string;
-    description: string;
-    path: string;
-  } | undefined,
+  resolve: (slug: string) => SlugMetadata | undefined,
 ): Promise<Metadata> {
   const { slug } = await params;
   const resolved = resolve(slug);
@@ -59,7 +67,11 @@ export async function getBlogPostMetadata(
   return createSlugPageMetadata(params, (slug) => {
     const post = getBlogPostBySlug(slug);
     if (!post) return undefined;
-    return { title: post.title, description: post.excerpt, path: post.permalink };
+    return {
+      title: post.title,
+      description: post.excerpt,
+      path: post.permalink,
+    };
   });
 }
 
@@ -84,16 +96,5 @@ export const rootMetadata: Metadata = {
     template: `%s — ${site.name}`,
   },
   description: defaultDescription,
-  openGraph: {
-    title: defaultTitle,
-    description: defaultDescription,
-    siteName: site.name,
-    locale: "en_GB",
-    type: "website",
-  },
-  twitter: {
-    card: "summary",
-    title: defaultTitle,
-    description: defaultDescription,
-  },
+  ...buildSocialMetadata(defaultTitle, defaultDescription),
 };

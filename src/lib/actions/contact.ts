@@ -6,6 +6,11 @@ import { contactSchema } from "@/lib/validation";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const FROM_ADDRESS = "Portfolio <onboarding@resend.dev>";
+const SUCCESS_MESSAGE = "Thanks — I'll get back to you soon.";
+const ERROR_MESSAGE = "Something went wrong — please try again.";
+const HONEYPOT_MESSAGE = "Thanks!";
+
 export type ContactState = {
   ok: boolean;
   errors?: Record<string, string[]>;
@@ -26,11 +31,11 @@ export async function sendContactEmail(
 
   // Bot filled the hidden field — pretend success so it learns nothing.
   if (website) {
-    return { ok: true, message: "Thanks!" };
+    return { ok: true, message: HONEYPOT_MESSAGE };
   }
 
   const { error } = await resend.emails.send({
-    from: "Portfolio <onboarding@resend.dev>",
+    from: FROM_ADDRESS,
     to: email,
     replyTo: email,
     subject: `[Portfolio] ${subject}`,
@@ -38,8 +43,8 @@ export async function sendContactEmail(
   });
 
   if (error) {
-    return { ok: false, message: "Something went wrong — please try again." };
+    return { ok: false, message: ERROR_MESSAGE };
   }
 
-  return { ok: true, message: "Thanks — I'll get back to you soon." };
+  return { ok: true, message: SUCCESS_MESSAGE };
 }

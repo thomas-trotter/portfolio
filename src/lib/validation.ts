@@ -7,3 +7,5 @@ export const contactSchema = z.object({
   message: z.string().min(10, "Message is a bit short").max(5000),
   website: z.string().max(0).optional(),
 });
+
+export type ContactFormData = z.infer<typeof contactSchema>;
