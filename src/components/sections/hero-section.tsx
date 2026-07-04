@@ -5,7 +5,7 @@ import { site } from "@/lib/site";
 export default function HeroSection() {
   return (
     <Section centered className="pt-[72px] pb-14">
-      <h1 className="mb-3.5 text-[2.375rem] font-bold leading-[1.15] tracking-[-0.02em] text-ink">
+      <h1 className="page-title">
         Hi, I&apos;m {site.name}
       </h1>
       <p className="mx-auto mb-6.5 max-w-[520px] text-base leading-relaxed text-muted">
