@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation";
 import PageLayout from "@/components/layout/page-layout";
 import ProjectDetailSection from "@/components/sections/project-detail-section";
 import { getProjectBySlug } from "@/lib/content";
+import { requireBySlug } from "@/lib/slug-page";
 
 export { getProjectMetadata as generateMetadata } from "@/lib/metadata";
 export { getProjectStaticParams as generateStaticParams } from "@/lib/static-params";
@@ -13,12 +13,7 @@ type ProjectDetailPageProps = {
 export default async function ProjectDetailPage({
   params,
 }: ProjectDetailPageProps) {
-  const { slug } = await params;
-  const project = getProjectBySlug(slug);
-
-  if (!project) {
-    notFound();
-  }
+  const project = await requireBySlug(params, getProjectBySlug);
 
   return (
     <PageLayout>
