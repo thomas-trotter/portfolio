@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import classNames from "classnames";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import BlogPostListItem from "@/components/cards/blog-post-list-item";
 import Section from "@/components/ui/section";
 import { blogPosts, POSTS_PER_PAGE } from "@/lib/content";
@@ -42,7 +43,7 @@ export default function BlogListSection() {
   return (
     <Section>
       <div className="mb-7.5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-[2.375rem] font-bold leading-[1.15] tracking-[-0.02em] text-ink">
+        <h1 className="title-display">
           Blog
         </h1>
         <input
@@ -84,7 +85,7 @@ export default function BlogListSection() {
             disabled={currentPage === 1}
             aria-label="Previous page"
           >
-            ‹
+            <HiChevronLeft className="size-4" aria-hidden />
           </button>
           {pageNumbers.map((pageNumber) => (
             <button
@@ -107,7 +108,7 @@ export default function BlogListSection() {
             disabled={currentPage === totalPages}
             aria-label="Next page"
           >
-            ›
+            <HiChevronRight className="size-4" aria-hidden />
           </button>
         </nav>
       )}
