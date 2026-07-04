@@ -26,7 +26,7 @@ export async function sendContactEmail(
 
     const { name, email, subject, message, website } = parsed.data;
     
-    // Bot filled the hidden field -> pretend success so it learns nothing
+    // Bot filled the hidden field so it pretends success so it learns nothing
     if (website) {
         return { ok: true, message: "Thanks!"}
     }
