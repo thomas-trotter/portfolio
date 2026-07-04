@@ -7,3 +7,8 @@ export const contactSchema = z.object({
   message: z.string().min(10, "Message is a bit short").max(5000),
   website: z.string().max(0).optional(),
 });
+
+export const loginSchema = z.object({
+  email: z.email("Enter a valid email"),
+  password: z.string().min(1, "Password is required"),
+})
