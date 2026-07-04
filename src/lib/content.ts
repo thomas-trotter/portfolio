@@ -182,16 +182,8 @@ export function getRelatedPosts(
   return blogPosts.filter((post) => post.slug !== slug).slice(0, limit);
 }
 
-export function blogPostHref(slug: string): string {
-  return `/blog/${slug}`;
-}
-
 export function getProjectBySlug(slug: string): ProjectDetail | undefined {
   return allProjects.find((project) => project.slug === slug);
-}
-
-export function projectHref(slug: string): string {
-  return `/projects/${slug}`;
 }
 
 export function getAboutPage(): AboutPage {
