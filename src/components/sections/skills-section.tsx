@@ -5,7 +5,7 @@ import { site } from "@/lib/site";
 export default function SkillsSection() {
   return (
     <Section className="pt-0 pb-[52px]">
-      <h2 className="mb-[18px] text-[21px] font-semibold tracking-[-0.01em]">
+      <h2 className="section-heading">
         Skills
       </h2>
       <div className="flex flex-wrap gap-2.5">
