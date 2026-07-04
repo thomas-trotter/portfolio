@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Mail, MapPin } from "lucide-react";
 import Section from "@/components/ui/section";
 import ContactForm from "@/components/forms/contact-form";
 
@@ -15,8 +16,8 @@ export default function ContactSection() {
           <p className="mb-6.5 text-[15px] leading-[1.7] text-ink/80">
             {contact.intro}
           </p>
-          <p className="mb-2 font-mono text-xs text-muted">
-            📧{" "}
+          <p className="mb-2 flex items-center gap-1.5 font-mono text-xs text-muted">
+            <Mail className="size-3 shrink-0" aria-hidden />
             <a
               href={`mailto:${contact.email}`}
               className="text-ink transition-colors hover:text-accent"
@@ -24,8 +25,9 @@ export default function ContactSection() {
               {contact.email}
             </a>
           </p>
-          <p className="mb-5.5 font-mono text-xs text-muted">
-            📍 {contact.location}
+          <p className="mb-5.5 flex items-center gap-1.5 font-mono text-xs text-muted">
+            <MapPin className="size-3 shrink-0" aria-hidden />
+            {contact.location}
           </p>
           <div className="flex flex-wrap gap-2">
             {contact.profileLinks.map((link) => (
