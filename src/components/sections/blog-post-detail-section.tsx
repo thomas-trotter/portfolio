@@ -24,7 +24,7 @@ export default function BlogPostDetailSection({
   return (
     <Section className="mx-auto max-w-[600px]">
       <BackLink href="/blog" className="mb-[18px]">
-        ← Back to blog
+        Back to blog
       </BackLink>
 
       <h1 className="page-title">{post.title}</h1>
