@@ -16,6 +16,9 @@ export type ProjectDetail = {
   id: string;
   name: string;
   description: string;
+  thumbnailSrc: string;
+  heroSrc: string;
+  diagramSrc?: string;
   tags: readonly ProjectTag[];
   categories: readonly ProjectCategory[];
   featured: boolean;
@@ -28,7 +31,7 @@ export type ProjectDetail = {
 
 export type ProjectSummary = Pick<
   ProjectDetail,
-  "id" | "name" | "description" | "tags" | "categories"
+  "id" | "name" | "description" | "tags" | "categories" | "thumbnailSrc"
 >;
 
 const placeholderDetail = {
@@ -39,7 +42,7 @@ const placeholderDetail = {
     { label: "Live demo", href: "#" },
   ],
   overview:
-    "[What the project is, why you built it, and the outcome — 2–3 sentences.]",
+    "[What the project is, why you built it, and the outcome — 2-3 sentences.]",
   problemApproach:
     "[The problem you set out to solve and how you approached it technically.]",
 } as const;
@@ -57,6 +60,9 @@ export const allProjects: readonly ProjectDetail[] = [
     featured: true,
     name: "[Project Name]",
     description: "Short description of the project.",
+    thumbnailSrc: "/placeholder.svg",
+    heroSrc: "/placeholder.svg",
+    diagramSrc: "/placeholder.svg",
     tags: [
       { label: "ML", variant: "accent" },
       { label: "Python", variant: "muted" },
@@ -69,6 +75,8 @@ export const allProjects: readonly ProjectDetail[] = [
     featured: true,
     name: "[Project Name]",
     description: "Short description of the project.",
+    thumbnailSrc: "/placeholder.svg",
+    heroSrc: "/placeholder.svg",
     tags: [
       { label: "Web", variant: "accent" },
       { label: "React", variant: "muted" },
@@ -82,6 +90,8 @@ export const allProjects: readonly ProjectDetail[] = [
     featured: true,
     name: "[Project Name]",
     description: "Short description of the project.",
+    thumbnailSrc: "/placeholder.svg",
+    heroSrc: "/placeholder.svg",
     tags: [{ label: "Research", variant: "accent" }],
     categories: ["Research"],
     ...placeholderDetail,
@@ -92,6 +102,8 @@ export const allProjects: readonly ProjectDetail[] = [
     featured: false,
     name: "[Project Name]",
     description: "Short description of the project.",
+    thumbnailSrc: "/placeholder.svg",
+    heroSrc: "/placeholder.svg",
     tags: [{ label: "ML", variant: "accent" }],
     categories: ["ML / AI"],
     ...placeholderDetail,
@@ -101,6 +113,8 @@ export const allProjects: readonly ProjectDetail[] = [
     featured: false,
     name: "[Project Name]",
     description: "Short description of the project.",
+    thumbnailSrc: "/placeholder.svg",
+    heroSrc: "/placeholder.svg",
     tags: [{ label: "Web", variant: "accent" }],
     categories: ["Web"],
     ...placeholderDetail,
@@ -111,6 +125,8 @@ export const allProjects: readonly ProjectDetail[] = [
     featured: false,
     name: "[Project Name]",
     description: "Short description of the project.",
+    thumbnailSrc: "/placeholder.svg",
+    heroSrc: "/placeholder.svg",
     tags: [
       { label: "ML", variant: "accent" },
       { label: "Research", variant: "muted" },
