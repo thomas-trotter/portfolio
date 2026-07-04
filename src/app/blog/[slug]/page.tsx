@@ -7,7 +7,9 @@ export { getBlogPostMetadata as generateMetadata } from "@/lib/metadata";
 export { getBlogPostStaticParams as generateStaticParams } from "@/lib/static-params";
 
 type BlogPostDetailPageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{
+    slug: string
+  }>;
 };
 
 export default async function BlogPostDetailPage({
