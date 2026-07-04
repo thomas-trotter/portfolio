@@ -41,7 +41,7 @@ export default function LoginForm() {
 
             <div className="text-right text-[13px]">
                 <Link
-                    href="/"
+                    href="/admin/reset-password"
                     className="text-accent hover:underline"
                 >
                     Forgot password?
