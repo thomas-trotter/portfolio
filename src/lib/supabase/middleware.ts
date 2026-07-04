@@ -29,6 +29,17 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getUser();
   const { pathname } = request.nextUrl;
 
+  if (pathname === "/admin/reset-password") {
+    return NextResponse.next({ request });
+  }
+
+  if (pathname === "/admin/change-password") {
+    if (!data.user) {
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+    return NextResponse.next({ request });
+  }
+
   if (!data.user && pathname !== "/admin") {
     return NextResponse.redirect(new URL("/admin", request.url));
   }
