@@ -1,7 +1,9 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 import type { MdxComponents } from "@/components/mdx/types";
 
 const bodyClass = "text-[15px] leading-[1.7] text-ink/80";
+const mdxLinkClass = "text-accent underline-offset-2 transition-opacity hover:opacity-80";
 
 function createParagraph(marginClass: string) {
   return ({ children }: { children?: ReactNode }) => (
@@ -20,4 +22,27 @@ export const mdxHeadingComponents = {
   h2: ({ children }: { children?: ReactNode }) => (
     <h2 className="section-heading">{children}</h2>
   ),
+} satisfies MdxComponents;
+
+export const mdxLinkComponents = {
+  a: ({ href, children }: { href?: string; children?: ReactNode }) => {
+    if (href?.startsWith("/")) {
+      return (
+        <Link href={href} className={mdxLinkClass}>
+          {children}
+        </Link>
+      );
+    }
+
+    return (
+      <a
+        href={href}
+        className={mdxLinkClass}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {children}
+      </a>
+    );
+  },
 } satisfies MdxComponents;
