@@ -1,7 +1,5 @@
-import type { MdxComponents } from "@/components/mdx/types";
+import { mdxParagraphComponents } from "@/components/mdx/shared";
 
-export const contactMdxComponents: MdxComponents = {
-  p: ({ children }) => (
-    <p className="mb-6.5 text-[15px] leading-[1.7] text-ink/80">{children}</p>
-  ),
+export const contactMdxComponents = {
+  p: mdxParagraphComponents.contactIntro,
 };
