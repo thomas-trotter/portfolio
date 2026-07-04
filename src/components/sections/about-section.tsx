@@ -6,8 +6,8 @@ import Card from "@/components/ui/card";
 import DetailSidebar from "@/components/ui/detail-sidebar";
 import Pill from "@/components/ui/pill";
 import Section from "@/components/ui/section";
+import { site } from "@/.velite";
 import { getAboutPage } from "@/lib/content";
-import { site } from "@/lib/site";
 
 export default function AboutSection() {
   const about = getAboutPage();

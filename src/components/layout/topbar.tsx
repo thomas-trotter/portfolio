@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import NavLink from "@/components/ui/nav-link";
-import { site, topbarLinks } from "@/lib/site";
-
+import { site } from "@/.velite";
+import { topbarLinks } from "@/lib/site";
 
 export default function TopBar() {
   const pathname = usePathname();

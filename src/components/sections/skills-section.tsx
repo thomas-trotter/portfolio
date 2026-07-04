@@ -1,6 +1,6 @@
 import Pill from "@/components/ui/pill";
+import { site } from "@/.velite";
 import Section from "@/components/ui/section";
-import { site } from "@/lib/site";
 
 export default function SkillsSection() {
   return (

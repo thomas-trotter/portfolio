@@ -1,5 +1,4 @@
-import { blog, pages, projects, type Blog, type Page, type Project } from "@/.velite";
-import { email, profileLinks, skills } from "@/lib/constants";
+import { blog, pages, projects, site, type Blog, type Page, type Project } from "@/.velite";
 import { projectCategories } from "@/lib/project-categories";
 import type {
   AboutPage,
@@ -87,12 +86,12 @@ function mapProject(project: Project): ProjectDetail {
 function mapAboutPage(page: Page): AboutPage {
   return {
     photoSrc: page.photoSrc ?? DEFAULT_HEADSHOT,
-    location: page.location ?? "",
+    location: site.location,
     education: page.education ?? "",
     availability: page.availability ?? "",
     cvHref: page.cvHref ?? "",
-    skills,
-    profileLinks,
+    skills: site.skills,
+    profileLinks: site.profileLinks,
     experience: page.experience,
     code: page.code,
   };
@@ -100,9 +99,9 @@ function mapAboutPage(page: Page): AboutPage {
 
 function mapContactPage(page: Page): ContactPage {
   return {
-    location: page.location ?? "",
-    email,
-    profileLinks,
+    location: site.location,
+    email: site.email,
+    profileLinks: site.profileLinks,
     code: page.code,
   };
 }

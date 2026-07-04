@@ -9,7 +9,7 @@ import {
   getRelatedPosts,
   type BlogPostDetail,
 } from "@/lib/content";
-import { site } from "@/lib/site";
+import { site } from "@/.velite";
 
 type BlogPostDetailSectionProps = {
   post: BlogPostDetail;
@@ -59,7 +59,7 @@ export default function BlogPostDetailSection({
         />
         <div>
           <p className="text-sm font-semibold">{site.name}</p>
-          <p className="font-mono text-xs text-muted">MSci AI student</p>
+          <p className="font-mono text-xs text-muted">{site.subtitle}</p>
         </div>
       </div>
 

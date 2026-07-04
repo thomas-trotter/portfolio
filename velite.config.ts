@@ -3,6 +3,32 @@ import { projectCategories } from "./src/lib/project-categories";
 
 export { projectCategories };
 
+const site = defineCollection({
+  name: "Site",
+  pattern: "site.yaml",
+  single: true,
+  schema: s
+    .object({
+      name: s.string(),
+      tagline: s.string(),
+      subtitle: s.string(),
+      email: s.string(),
+      location: s.string(),
+      copyrightYear: s.number(),
+      skills: s.array(s.string()).default([]),
+      profileLinks: s
+        .array(s.object({ label: s.string(), href: s.string() }))
+        .default([]),
+    })
+    .transform((data) => ({
+      ...data,
+      profileLinks: [
+        ...data.profileLinks,
+        { label: "Email", href: `mailto:${data.email}` },
+      ],
+    })),
+});
+
 const blog = defineCollection({
   name: "Blog",
   pattern: "blog/**/*.mdx",
@@ -57,7 +83,6 @@ const pages = defineCollection({
     .object({
       slug: s.path(),
       photoSrc: s.string().optional(),
-      location: s.string().optional(),
       education: s.string().optional(),
       availability: s.string().optional(),
       cvHref: s.string().optional(),
@@ -87,6 +112,6 @@ export default defineConfig({
     base: "/static/",
     clean: true,
   },
-  collections: { blog, projects, pages },
+  collections: { blog, projects, pages, site },
   mdx: { rehypePlugins: [], remarkPlugins: [] },
 });

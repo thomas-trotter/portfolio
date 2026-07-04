@@ -1,15 +1,4 @@
-import { profileLinks, skills } from "@/lib/constants";
-
-export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-
-export const site = {
-  name: "Thomas Trotter",
-  tagline:
-    "MSci AI student — aspiring ML / software engineer building thoughtful, well-crafted systems.",
-  copyrightYear: 2026,
-  skills,
-} as const;
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const topbarLinks = [
   { label: "Home", href: "/" },
@@ -18,5 +7,3 @@ export const topbarLinks = [
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ] as const;
-
-export const footerLinks = profileLinks;

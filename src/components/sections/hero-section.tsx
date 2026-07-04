@@ -1,6 +1,6 @@
 import Button from "@/components/ui/button";
+import { site } from "@/.velite";
 import Section from "@/components/ui/section";
-import { site } from "@/lib/site";
 
 export default function HeroSection() {
   return (
