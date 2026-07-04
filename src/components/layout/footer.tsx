@@ -3,7 +3,7 @@ import { footerLinks, site } from "@/lib/mocks/site";
 
 export default function Footer() {
   return (
-    <footer className="mt-2.5 flex flex-wrap items-center justify-between gap-4 border-t border-border px-11 py-[30px]">
+    <footer className="shrink-0 flex flex-wrap items-center justify-between gap-4 border-t border-border px-6 py-5 md:px-11">
       <span className="font-mono text-xs text-muted">
         © {site.copyrightYear} — {site.name}
       </span>
