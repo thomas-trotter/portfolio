@@ -55,23 +55,18 @@ export default function ProjectDetailSection({
       <Section className="min-w-0 flex-1">
         <h1 className="page-title">{project.name}</h1>
 
-        <ContentImage
-          src={project.heroSrc}
-          alt={`Hero screenshot of ${project.name}`}
-          className="mb-[26px] h-[220px]"
-          fallbackLabel="[ hero screenshot / demo ]"
-        />
+        {project.heroSrc ? (
+          <ContentImage
+            src={project.heroSrc}
+            alt={`Hero screenshot of ${project.name}`}
+            className="mb-[26px] h-[220px]"
+            fallbackLabel="[ hero screenshot / demo ]"
+          />
+        ) : null}
 
         <div className="[&>h2:not(:first-child)]:mt-[26px]">
           <MDXContent code={project.code} components={projectMdxComponents} />
         </div>
-
-        <ContentImage
-          src={project.diagramSrc}
-          alt={`Diagram for ${project.name}`}
-          className="mt-4 h-[160px]"
-          fallbackLabel="[ diagram / screenshot ]"
-        />
       </Section>
     </div>
   );
