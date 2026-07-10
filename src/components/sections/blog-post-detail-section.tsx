@@ -33,12 +33,14 @@ export default function BlogPostDetailSection({
         {post.date} · {post.readTime}
       </p>
 
-      <ContentImage
-        src={post.coverSrc}
-        alt={`Cover image for ${post.title}`}
-        className="mb-6 h-[220px]"
-        fallbackLabel="[ cover image ]"
-      />
+      {post.coverSrc ? (
+        <ContentImage
+          src={post.coverSrc}
+          alt={`Cover image for ${post.title}`}
+          className="mb-6 h-[220px]"
+          fallbackLabel="[ cover image ]"
+        />
+      ) : null}
 
       <MDXContent code={post.code} components={blogMdxComponents} />
 
@@ -71,12 +73,14 @@ export default function BlogPostDetailSection({
             href={relatedPost.permalink}
             className="min-w-0 flex-1 transition-opacity hover:opacity-90"
           >
-            <ContentImage
-              src={relatedPost.coverSrc}
-              alt={`Cover image for ${relatedPost.title}`}
-              className="mb-2 h-20"
-              fallbackLabel="[ thumb ]"
-            />
+            {relatedPost.coverSrc ? (
+              <ContentImage
+                src={relatedPost.coverSrc}
+                alt={`Cover image for ${relatedPost.title}`}
+                className="mb-2 h-20"
+                fallbackLabel="[ thumb ]"
+              />
+            ) : null}
             <p className="text-sm font-semibold">{relatedPost.title}</p>
           </Link>
         ))}
