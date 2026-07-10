@@ -39,6 +39,7 @@ const blog = defineCollection({
       date: s.isodate(),
       tags: s.array(s.string()).default([]),
       featured: s.boolean().default(false),
+      cover: s.image().optional(),
       excerpt: s.excerpt(),
       metadata: s.metadata(),
       code: s.mdx(),
@@ -67,6 +68,8 @@ const projects = defineCollection({
       links: s
         .array(s.object({ label: s.string(), href: s.string() }))
         .default([]),
+      thumbnail: s.image().optional(),
+      hero: s.image().optional(),
       code: s.mdx(),
     })
     .transform((data) => ({
