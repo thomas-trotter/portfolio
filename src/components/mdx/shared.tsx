@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import type { MdxComponents } from "@/components/mdx/types";
@@ -22,6 +23,28 @@ export const mdxHeadingComponents = {
   h2: ({ children }: { children?: ReactNode }) => (
     <h2 className="section-heading">{children}</h2>
   ),
+} satisfies MdxComponents;
+
+export const mdxImageComponents = {
+  img: ({ src, alt }: { src?: string; alt?: string }) => {
+    if (!src) {
+      return null;
+    }
+
+    return (
+      <span className="my-6 block overflow-hidden rounded-[10px] border border-border">
+        <Image
+          src={src}
+          alt={alt ?? ""}
+          width={0}
+          height={0}
+          sizes="(max-width: 600px) 100vw, 600px"
+          className="h-auto w-full"
+          style={{ width: "100%", height: "auto" }}
+        />
+      </span>
+    );
+  },
 } satisfies MdxComponents;
 
 export const mdxLinkComponents = {
