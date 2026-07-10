@@ -1,0 +1,32 @@
+---
+name: Image Processing API
+description: A production-ready FastAPI service for image management, editing, and transformer-based object detection — asynchronous, rate-limited, fully tested, and shipped with Docker.
+categories: ["ML / AI", "Web"]
+tags: [FastAPI, Computer Vision, Docker]
+featured: true
+role: Solo developer — architecture, implementation, testing, and documentation
+tools: [Python, FastAPI, PyTorch, Transformers, Pillow, Docker, Pytest]
+links:
+  - label: GitHub
+    href: https://github.com/thomas-trotter/image-processing-api
+---
+
+## Overview
+
+A RESTful service that handles the full lifecycle of an image: upload, storage, retrieval, and deletion; a suite of editing operations — resize, rotate, grayscale, blur, sharpen, brightness, and contrast; and AI-powered object detection that returns labelled bounding boxes with confidence scores. I built it to be more than a demo: it is rate-limited, logged, documented end to end, and deployable with a single Docker Compose command.
+
+## Architecture
+
+The codebase follows a layered architecture. FastAPI route handlers validate requests and shape responses, managers coordinate the business logic, and focused services do the actual work — CRUD and storage, image editing, and detection — with Pydantic schemas defining every request and response. Dependencies are injected rather than accessed globally, and storage sits behind an abstract interface, so the local-disk backend could be swapped for cloud storage without touching the business logic.
+
+## Object detection with DETR
+
+Detection is powered by DETR (`facebook/detr-resnet-50`), an end-to-end transformer detection model with a ResNet-50 backbone, loaded through Hugging Face Transformers. A single upload can be queried for structured JSON of detected objects with per-object confidence scores, or returned as an annotated image with bounding boxes drawn on.
+
+## Performance
+
+Every route handler is asynchronous, and CPU-heavy work — Pillow transforms and model inference — is pushed onto worker threads with `asyncio.to_thread`, so the event loop is never blocked and the API stays responsive while a detection request is running.
+
+## Testing & delivery
+
+The service is covered by 124 unit and integration tests spanning services, managers, and routes end to end, with separate development and production Docker Compose configurations. Documentation includes a quickstart, full API reference, architecture overview, and deployment and troubleshooting guides.

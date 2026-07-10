@@ -5,11 +5,14 @@ email: thomas.trotter2006@gmail.com
 location: London, UK
 copyrightYear: 2026
 skills:
-  - Communication
-  - Teamwork
   - Python
   - Machine Learning
+  - FastAPI
+  - TypeScript / React
+  - Docker
   - Software Development
+  - Communication
+  - Teamwork
 profileLinks:
   - label: GitHub
     href: https://github.com/thomas-trotter/
