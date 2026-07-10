@@ -32,7 +32,6 @@ export const projectFilters: readonly ProjectFilter[] = [
   ...projectCategories,
 ];
 
-const PLACEHOLDER_IMAGE = "/placeholder.svg";
 const DEFAULT_HEADSHOT = "/headshot.png";
 
 function formatDisplayDate(isoDate: string): string {
@@ -57,7 +56,7 @@ function mapBlogPost(post: Blog): BlogPostDetail {
     date: formatDisplayDate(post.date),
     readTime: post.readTime,
     excerpt: post.excerpt,
-    coverSrc: PLACEHOLDER_IMAGE,
+    coverSrc: post.cover?.src,
     code: post.code,
     tags: mapTags(post.tags),
     permalink: post.permalink,
@@ -65,13 +64,14 @@ function mapBlogPost(post: Blog): BlogPostDetail {
 }
 
 function mapProject(project: Project): ProjectDetail {
+  const heroSrc = project.hero?.src;
+
   return {
     slug: project.slug,
     name: project.name,
     description: project.description,
-    thumbnailSrc: PLACEHOLDER_IMAGE,
-    heroSrc: PLACEHOLDER_IMAGE,
-    diagramSrc: PLACEHOLDER_IMAGE,
+    thumbnailSrc: project.thumbnail?.src ?? heroSrc,
+    heroSrc,
     tags: mapTags(project.tags),
     categories: project.categories,
     featured: project.featured,
