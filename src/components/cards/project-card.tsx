@@ -17,12 +17,14 @@ export default function ProjectCard({
       className="block transition-opacity hover:opacity-90"
     >
       <Card>
-        <ContentImage
-          src={project.thumbnailSrc}
-          alt={`Screenshot of ${project.name}`}
-          className="mb-3.5 h-[120px]"
-          fallbackLabel="[ project screenshot ]"
-        />
+        {project.thumbnailSrc ? (
+          <ContentImage
+            src={project.thumbnailSrc}
+            alt={`Screenshot of ${project.name}`}
+            className="mb-3.5 h-[120px]"
+            fallbackLabel="[ project screenshot ]"
+          />
+        ) : null}
         <h3 className="mb-1.5 font-semibold">{project.name}</h3>
         <p className="mb-2.5 text-[13px] leading-[1.7] text-ink/80">
           {project.description}
