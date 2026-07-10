@@ -1,11 +1,11 @@
 ---
 name: Image Processing API
-description: A production-ready FastAPI service for image management, editing, and transformer-based object detection — asynchronous, rate-limited, fully tested, and shipped with Docker.
+description: A production-ready FastAPI service for image management, Pillow editing, and transformer-based object detection — bounded-context architecture, semaphore-capped async inference, an 80% coverage gate enforced in CI and the Docker build itself.
 categories: ["ML / AI", "Web"]
-tags: [FastAPI, Computer Vision, Docker]
+tags: [FastAPI, Computer Vision, ML Serving, Docker]
 featured: true
 role: Solo developer — architecture, implementation, testing, and documentation
-tools: [Python, FastAPI, PyTorch, Transformers, Pillow, Docker, Pytest]
+tools: [Python, FastAPI, PyTorch, Transformers, Pillow, SQLAlchemy, SQLite, Docker, Pytest]
 links:
   - label: GitHub
     href: https://github.com/thomas-trotter/image-processing-api
@@ -13,20 +13,24 @@ links:
 
 ## Overview
 
-A RESTful service that handles the full lifecycle of an image: upload, storage, retrieval, and deletion; a suite of editing operations — resize, rotate, grayscale, blur, sharpen, brightness, and contrast; and AI-powered object detection that returns labelled bounding boxes with confidence scores. I built it to be more than a demo: it is rate-limited, logged, documented end to end, and deployable with a single Docker Compose command.
+A RESTful service that handles the full lifecycle of an image: upload, paginated listing, retrieval, moves between folders, and deletion; a suite of Pillow editing operations — resize, rotate, grayscale, blur, sharpen, brightness, and contrast; and transformer-based object detection that returns labelled bounding boxes with confidence scores, or the annotated image itself. Image bytes live on the filesystem while a SQLite catalogue tracks dimensions, format, and a content hash — so re-uploading identical bytes deduplicates to the existing record instead of writing a copy.
+
+I built it to be more than a demo: it is rate-limited per endpoint, hardened against path traversal, logged, documented end to end (including ADRs recording key trade-offs), and deployable with a single Docker Compose command.
 
 ## Architecture
 
-The codebase follows a layered architecture. FastAPI route handlers validate requests and shape responses, managers coordinate the business logic, and focused services do the actual work — CRUD and storage, image editing, and detection — with Pydantic schemas defining every request and response. Dependencies are injected rather than accessed globally, and storage sits behind an abstract interface, so the local-disk backend could be swapped for cloud storage without touching the business logic.
+The codebase is organised into three bounded contexts — `media`, `editing`, and `vision` — each with the same internal shape: an API layer of Pydantic request/response models and exception handlers, a domain layer of plain DTOs and errors deliberately free of FastAPI or ORM imports, and a service layer that orchestrates the work. Thin route handlers delegate to these services through FastAPI's dependency injection, and each context's domain exceptions map to HTTP status codes via registered handlers, keeping error semantics consistent across the API.
 
-## Object detection with DETR
+Storage sits behind an abstract `BaseImageStorage` interface, so the local-disk backend could be swapped for cloud storage without touching business logic — a trade-off documented in an ADR alongside the migration path.
 
-Detection is powered by DETR (`facebook/detr-resnet-50`), an end-to-end transformer detection model with a ResNet-50 backbone, loaded through Hugging Face Transformers. A single upload can be queried for structured JSON of detected objects with per-object confidence scores, or returned as an annotated image with bounding boxes drawn on.
+## Serving DETR in production
 
-## Performance
+Detection is powered by DETR (`facebook/detr-resnet-50`), an end-to-end transformer detection model with a ResNet-50 backbone, loaded through Hugging Face Transformers. Rather than bolting a model onto a web app, the service treats inference as an operational concern: the model loads once at startup with an optional warmup pass, readiness is exposed at `/health/ready` for container orchestration, and confidence threshold, maximum image dimension, and device are all configurable through environment settings. Results are returned as structured JSON or as annotated images, either base64-encoded or persisted alongside the originals.
 
-Every route handler is asynchronous, and CPU-heavy work — Pillow transforms and model inference — is pushed onto worker threads with `asyncio.to_thread`, so the event loop is never blocked and the API stays responsive while a detection request is running.
+## Performance & concurrency
+
+Every route handler is asynchronous, and CPU-heavy work — Pillow transforms, filesystem I/O, and model inference — is pushed onto worker threads with `asyncio.to_thread`, so the event loop is never blocked. Because unbounded parallel inference would exhaust CPU and memory, detection runs behind an `asyncio` semaphore that caps concurrent forward passes, keeping latency predictable under load.
 
 ## Testing & delivery
 
-The service is covered by 124 unit and integration tests spanning services, managers, and routes end to end, with separate development and production Docker Compose configurations. Documentation includes a quickstart, full API reference, architecture overview, and deployment and troubleshooting guides.
+The service is covered by 149 tests across three tiers: a fast suite that mocks only the model weights while exercising real services, full-stack integration tests running against real SQLite and storage, and real-model inference smoke tests that download DETR and run on a nightly schedule. GitHub Actions runs linting (ruff), type checking (mypy), and the fast suite with an 80% coverage gate on every push — and the Docker build enforces the same gate, so an image cannot be produced from failing code. Separate development and production Compose configurations ship with named volumes and readiness healthchecks, and documentation includes a quickstart, full API reference, architecture overview, and deployment and troubleshooting guides.

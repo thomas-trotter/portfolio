@@ -17,7 +17,7 @@ export type BlogPostDetail = {
   date: string;
   readTime: string;
   excerpt: string;
-  coverSrc: string;
+  coverSrc?: string;
   code: string;
   tags: readonly ContentTag[];
   permalink: string;
@@ -32,9 +32,8 @@ export type ProjectDetail = {
   slug: string;
   name: string;
   description: string;
-  thumbnailSrc: string;
-  heroSrc: string;
-  diagramSrc: string;
+  thumbnailSrc?: string;
+  heroSrc?: string;
   tags: readonly ContentTag[];
   categories: readonly ProjectCategory[];
   featured: boolean;
