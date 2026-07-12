@@ -1,42 +1,65 @@
 "use server";
 
+import { headers } from "next/headers";
 import { z } from "zod";
 import { Resend } from "resend";
 import { site } from "@/.velite";
-import { contactSchema } from "@/lib/validation";
+import { contactConfig } from "@/lib/config/contact";
+import { isRateLimited } from "@/lib/rate-limit";
+import {
+  contactSchema,
+  contactValuesFromFormData,
+  type ContactValues,
+} from "@/lib/validation";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-const FROM_ADDRESS = "Portfolio <onboarding@resend.dev>";
-const SUCCESS_MESSAGE = "Thanks — I'll get back to you soon.";
-const ERROR_MESSAGE = "Something went wrong — please try again.";
-const HONEYPOT_MESSAGE = "Thanks!";
 
 export type ContactState = {
   ok: boolean;
   errors?: Record<string, string[]>;
   message?: string;
+  values?: ContactValues;
 };
 
 export async function sendContactEmail(
   _prev: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
-  const parsed = contactSchema.safeParse(Object.fromEntries(formData));
+  const raw = Object.fromEntries(formData);
+  const values = contactValuesFromFormData(raw);
+  const parsed = contactSchema.safeParse(raw);
 
   if (!parsed.success) {
-    return { ok: false, errors: z.flattenError(parsed.error).fieldErrors };
+    return {
+      ok: false,
+      errors: z.flattenError(parsed.error).fieldErrors,
+      values,
+    };
   }
 
   const { name, email, subject, message, website } = parsed.data;
 
   // Bot filled the hidden field — pretend success so it learns nothing.
   if (website) {
-    return { ok: true, message: HONEYPOT_MESSAGE };
+    return { ok: true, message: contactConfig.messages.honeypot };
+  }
+
+  const headerStore = await headers();
+  const clientIp =
+    headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    headerStore.get("x-real-ip") ??
+    "unknown";
+
+  if (isRateLimited(clientIp)) {
+    return {
+      ok: false,
+      message: contactConfig.messages.rateLimit,
+      values,
+    };
   }
 
   const { error } = await resend.emails.send({
-    from: FROM_ADDRESS,
+    from: contactConfig.from,
     to: site.email,
     replyTo: email,
     subject: `[Portfolio] ${subject}`,
@@ -44,8 +67,8 @@ export async function sendContactEmail(
   });
 
   if (error) {
-    return { ok: false, message: ERROR_MESSAGE };
+    return { ok: false, message: contactConfig.messages.error, values };
   }
 
-  return { ok: true, message: SUCCESS_MESSAGE };
+  return { ok: true, message: contactConfig.messages.success };
 }
