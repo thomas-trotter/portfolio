@@ -5,6 +5,7 @@ import type {
   BlogPostDetail,
   BlogPostSummary,
   ContactPage,
+  ContentImageAsset,
   ContentTag,
   ProjectDetail,
   ProjectFilter,
@@ -16,6 +17,7 @@ export type {
   BlogPostDetail,
   BlogPostSummary,
   ContactPage,
+  ContentImageAsset,
   ContentTag,
   Experience,
   ProfileLink,
@@ -49,6 +51,21 @@ function mapTags(tags: readonly string[]): ContentTag[] {
   }));
 }
 
+function mapVeliteImage(
+  image: { src: string; width: number; height: number; blurDataURL: string } | undefined,
+): ContentImageAsset | undefined {
+  if (!image) {
+    return undefined;
+  }
+
+  return {
+    src: image.src,
+    width: image.width,
+    height: image.height,
+    blurDataURL: image.blurDataURL,
+  };
+}
+
 function mapBlogPost(post: Blog): BlogPostDetail {
   return {
     slug: post.slug,
@@ -56,7 +73,7 @@ function mapBlogPost(post: Blog): BlogPostDetail {
     date: formatDisplayDate(post.date),
     readTime: post.readTime,
     excerpt: post.excerpt,
-    coverSrc: post.cover?.src,
+    cover: mapVeliteImage(post.cover),
     code: post.code,
     tags: mapTags(post.tags),
     permalink: post.permalink,
@@ -64,14 +81,15 @@ function mapBlogPost(post: Blog): BlogPostDetail {
 }
 
 function mapProject(project: Project): ProjectDetail {
-  const heroSrc = project.hero?.src;
+  const hero = mapVeliteImage(project.hero);
+  const thumbnail = mapVeliteImage(project.thumbnail) ?? hero;
 
   return {
     slug: project.slug,
     name: project.name,
     description: project.description,
-    thumbnailSrc: project.thumbnail?.src ?? heroSrc,
-    heroSrc,
+    thumbnail,
+    hero,
     tags: mapTags(project.tags),
     categories: project.categories,
     featured: project.featured,
