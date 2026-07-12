@@ -1,11 +1,11 @@
 import {
   mdxHeadingComponents,
-  mdxImageComponents,
+  mdxProjectImageComponents,
   mdxParagraphComponents,
 } from "@/components/mdx/shared";
 
 export const projectMdxComponents = {
   ...mdxHeadingComponents,
-  ...mdxImageComponents,
+  ...mdxProjectImageComponents,
   p: mdxParagraphComponents.plain,
 };
