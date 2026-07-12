@@ -9,7 +9,6 @@ import type {
   ContentTag,
   ProjectDetail,
   ProjectFilter,
-  ProjectSummary,
 } from "@/lib/content/types";
 
 export type {
@@ -154,7 +153,23 @@ export function getRelatedPosts(
   slug: string,
   limit = 2,
 ): readonly BlogPostSummary[] {
-  return blogPosts.filter((post) => post.slug !== slug).slice(0, limit);
+  const current = getBlogPostBySlug(slug);
+  const candidates = blogPosts.filter((post) => post.slug !== slug);
+
+  if (!current || current.tags.length === 0) {
+    return candidates.slice(0, limit);
+  }
+
+  const currentTagLabels = new Set(current.tags.map((tag) => tag.label));
+
+  const ranked = candidates
+    .map((post) => ({
+      post,
+      overlap: post.tags.filter((tag) => currentTagLabels.has(tag.label)).length,
+    }))
+    .sort((a, b) => b.overlap - a.overlap);
+
+  return ranked.map(({ post }) => post).slice(0, limit);
 }
 
 export function getProjectBySlug(slug: string): ProjectDetail | undefined {
