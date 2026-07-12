@@ -4,6 +4,7 @@ import BackLink from "@/components/ui/back-link";
 import ContentImage from "@/components/ui/content-image";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
+import { IMAGE_SIZES } from "@/lib/config/images";
 import {
   getAboutPage,
   getRelatedPosts,
@@ -33,11 +34,14 @@ export default function BlogPostDetailSection({
         {post.date} · {post.readTime}
       </p>
 
-      {post.coverSrc ? (
+      {post.cover ? (
         <ContentImage
-          src={post.coverSrc}
+          src={post.cover.src}
+          blurDataURL={post.cover.blurDataURL}
           alt={`Cover image for ${post.title}`}
-          className="mb-6 h-[220px]"
+          className="mb-6 h-[220px] rounded-[10px] border border-border"
+          sizes={IMAGE_SIZES.blogCover}
+          priority
           fallbackLabel="[ cover image ]"
         />
       ) : null}
@@ -57,6 +61,7 @@ export default function BlogPostDetailSection({
           src={about.photoSrc}
           alt={`Photo of ${site.name}`}
           className="h-[46px] w-[46px] shrink-0 rounded-full"
+          sizes={IMAGE_SIZES.avatar}
           fallbackLabel="me"
         />
         <div>
@@ -73,11 +78,13 @@ export default function BlogPostDetailSection({
             href={relatedPost.permalink}
             className="min-w-0 flex-1 transition-opacity hover:opacity-90"
           >
-            {relatedPost.coverSrc ? (
+            {relatedPost.cover ? (
               <ContentImage
-                src={relatedPost.coverSrc}
+                src={relatedPost.cover.src}
+                blurDataURL={relatedPost.cover.blurDataURL}
                 alt={`Cover image for ${relatedPost.title}`}
-                className="mb-2 h-20"
+                className="mb-2 h-20 rounded-[10px] border border-border"
+                sizes="200px"
                 fallbackLabel="[ thumb ]"
               />
             ) : null}
