@@ -3,6 +3,12 @@ import { projectCategories } from "./src/lib/config/project-categories";
 
 export { projectCategories };
 
+function contentSlug(path: string, collectionPrefix: string) {
+  return path
+    .replace(new RegExp(`^${collectionPrefix}/`), "")
+    .replace(/\/index$/, "");
+}
+
 const site = defineCollection({
   name: "Site",
   pattern: "site.yaml",
@@ -44,12 +50,15 @@ const blog = defineCollection({
       metadata: s.metadata(),
       code: s.mdx(),
     })
-    .transform((data) => ({
-      ...data,
-      slug: data.slug.replace(/^blog\//, ""),
-      readTime: `${Math.max(1, Math.round(data.metadata.readingTime))} min read`,
-      permalink: `/blog/${data.slug.replace(/^blog\//, "")}`,
-    })),
+    .transform((data) => {
+      const slug = contentSlug(data.slug, "blog");
+      return {
+        ...data,
+        slug,
+        readTime: `${Math.max(1, Math.round(data.metadata.readingTime))} min read`,
+        permalink: `/blog/${slug}`,
+      };
+    }),
 });
 
 const projects = defineCollection({
@@ -72,11 +81,14 @@ const projects = defineCollection({
       hero: s.image().optional(),
       code: s.mdx(),
     })
-    .transform((data) => ({
-      ...data,
-      slug: data.slug.replace(/^projects\//, ""),
-      permalink: `/projects/${data.slug.replace(/^projects\//, "")}`,
-    })),
+    .transform((data) => {
+      const slug = contentSlug(data.slug, "projects");
+      return {
+        ...data,
+        slug,
+        permalink: `/projects/${slug}`,
+      };
+    }),
 });
 
 const pages = defineCollection({
