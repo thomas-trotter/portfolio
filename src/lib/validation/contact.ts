@@ -9,3 +9,21 @@ export const contactSchema = z.object({
 });
 
 export type ContactFormData = z.infer<typeof contactSchema>;
+
+export type ContactValues = {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+};
+
+export function contactValuesFromFormData(
+  raw: Record<string, FormDataEntryValue>,
+): ContactValues {
+  return {
+    name: String(raw.name ?? ""),
+    email: String(raw.email ?? ""),
+    subject: String(raw.subject ?? ""),
+    message: String(raw.message ?? ""),
+  };
+}
