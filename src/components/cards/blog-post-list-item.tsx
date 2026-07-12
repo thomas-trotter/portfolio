@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ContentImage from "@/components/ui/content-image";
+import { IMAGE_SIZES } from "@/lib/config/images";
 import type { BlogPostSummary } from "@/lib/content";
 
 type BlogPostListItemProps = {
@@ -12,11 +13,13 @@ export default function BlogPostListItem({ post }: BlogPostListItemProps) {
       href={post.permalink}
       className="flex flex-col gap-5 transition-opacity hover:opacity-90 sm:flex-row"
     >
-      {post.coverSrc ? (
+      {post.cover ? (
         <ContentImage
-          src={post.coverSrc}
+          src={post.cover.src}
+          blurDataURL={post.cover.blurDataURL}
           alt={`Cover image for ${post.title}`}
           className="h-[100px] w-full shrink-0 sm:w-[150px]"
+          sizes={IMAGE_SIZES.blogCover}
           fallbackLabel="[ thumb ]"
         />
       ) : null}
