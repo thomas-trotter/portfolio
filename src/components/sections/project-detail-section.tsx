@@ -5,6 +5,7 @@ import ContentImage from "@/components/ui/content-image";
 import DetailSidebar from "@/components/ui/detail-sidebar";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
+import { IMAGE_SIZES } from "@/lib/config/images";
 import type { ProjectDetail } from "@/lib/content";
 
 type ProjectDetailSectionProps = {
@@ -55,11 +56,18 @@ export default function ProjectDetailSection({
       <Section className="min-w-0 flex-1">
         <h1 className="page-title">{project.name}</h1>
 
-        {project.heroSrc ? (
+        {project.hero ? (
           <ContentImage
-            src={project.heroSrc}
+            src={project.hero.src}
+            width={project.hero.width}
+            height={project.hero.height}
+            blurDataURL={project.hero.blurDataURL}
             alt={`Hero screenshot of ${project.name}`}
-            className="mb-[26px] h-[220px]"
+            className="mb-[26px] rounded-[10px] border border-border"
+            sizes={IMAGE_SIZES.projectHero}
+            layout="intrinsic"
+            objectFit="contain"
+            priority
             fallbackLabel="[ hero screenshot / demo ]"
           />
         ) : null}
