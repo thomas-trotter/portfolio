@@ -1,5 +1,6 @@
+import rehypePrettyCode from "rehype-pretty-code";
 import { defineCollection, defineConfig, s } from "velite";
-import { projectCategories } from "./src/lib/config/project-categories";
+import { projectCategories } from "@/lib/config/project-categories";
 
 export { projectCategories };
 
@@ -128,5 +129,16 @@ export default defineConfig({
     clean: true,
   },
   collections: { blog, projects, pages, site },
-  mdx: { rehypePlugins: [], remarkPlugins: [] },
+  mdx: {
+    rehypePlugins: [
+      [
+        rehypePrettyCode,
+        {
+          theme: "github-light",
+          keepBackground: false,
+        },
+      ],
+    ],
+    remarkPlugins: [],
+  },
 });
