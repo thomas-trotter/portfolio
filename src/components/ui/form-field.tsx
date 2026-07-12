@@ -3,8 +3,10 @@ import FieldError from "@/components/ui/field-error";
 
 type FormFieldProps = {
   name: string;
+  label: string;
   type?: "text" | "email";
   placeholder: string;
+  defaultValue?: string;
   error?: string[];
   autoComplete?: string;
   multiline?: boolean;
@@ -13,40 +15,47 @@ type FormFieldProps = {
 
 export default function FormField({
   name,
+  label,
   type = "text",
   placeholder,
+  defaultValue,
   error,
   autoComplete,
   multiline = false,
   rows = 4,
 }: FormFieldProps) {
-  
   const hasError = Boolean(error?.length);
-  const inputClassName = classNames(
-    "input", {
-    "border-[oklch(0.55_0.18_25)]": hasError,
+  const errorId = `${name}-error`;
+  const inputClassName = classNames("input", {
+    "border-error-strong": hasError,
     "min-h-[90px] resize-y": multiline,
   });
 
+  const sharedInputProps = {
+    id: name,
+    name,
+    placeholder,
+    defaultValue,
+    className: inputClassName,
+    "aria-invalid": hasError,
+    "aria-describedby": hasError ? errorId : undefined,
+  };
+
   return (
     <>
+      <label htmlFor={name} className="sr-only">
+        {label}
+      </label>
       {multiline ? (
-        <textarea
-          name={name}
-          placeholder={placeholder}
-          rows={rows}
-          className={inputClassName}
-        />
+        <textarea {...sharedInputProps} rows={rows} />
       ) : (
         <input
+          {...sharedInputProps}
           type={type}
-          name={name}
-          placeholder={placeholder}
-          className={inputClassName}
           autoComplete={autoComplete}
         />
       )}
-      {hasError && <FieldError message={error![0]} />}
+      {hasError && <FieldError id={errorId} message={error![0]} />}
     </>
   );
 }

@@ -8,9 +8,11 @@ const bodyClass = "text-[15px] leading-[1.7] text-ink/80";
 const mdxLinkClass = "text-accent underline-offset-2 transition-opacity hover:opacity-80";
 
 function createParagraph(marginClass: string) {
-  return ({ children }: { children?: ReactNode }) => (
-    <p className={`${marginClass} ${bodyClass}`.trim()}>{children}</p>
-  );
+  function Paragraph({ children }: { children?: ReactNode }) {
+    return <p className={`${marginClass} ${bodyClass}`.trim()}>{children}</p>;
+  }
+  Paragraph.displayName = `MdxParagraph(${marginClass})`;
+  return Paragraph;
 }
 
 export const mdxParagraphComponents = {

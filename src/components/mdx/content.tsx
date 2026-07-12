@@ -21,12 +21,27 @@ function getMDXComponent(code: string): MdxComponent {
   return component;
 }
 
+type MdxRendererProps = {
+  code: string;
+  components?: MdxComponents;
+};
+
+function MdxRenderer({ code, components }: MdxRendererProps) {
+  const Component = getMDXComponent(code);
+  // Velite compiles MDX to a stable, module-cached component per code string.
+  // eslint-disable-next-line react-hooks/static-components -- not created during render; cached by code hash
+  return <Component components={{ ...sharedComponents, ...components }} />;
+}
+
 type MDXContentProps = {
   code: string;
   components?: MdxComponents;
 };
 
 export default function MDXContent({ code, components }: MDXContentProps) {
-  const Component = getMDXComponent(code);
-  return <Component components={{ ...sharedComponents, ...components }} />;
+  return (
+    <div className="prose-mdx">
+      <MdxRenderer code={code} components={components} />
+    </div>
+  );
 }
