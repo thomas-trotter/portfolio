@@ -1,0 +1,20 @@
+name: Thomas Trotter
+tagline: MSci AI student — building thoughtful, production-ready ML and software systems.
+subtitle: MSci AI student
+email: thomas.trotter2006@gmail.com
+location: London, UK
+copyrightYear: 2026
+skills:
+  - Python
+  - Machine Learning
+  - FastAPI
+  - TypeScript / React
+  - PyTorch
+  - Docker
+  - Next.js
+  - Pytest & CI
+profileLinks:
+  - label: GitHub
+    href: https://github.com/thomas-trotter/
+  - label: LinkedIn
+    href: https://www.linkedin.com/in/thomas-trotter/

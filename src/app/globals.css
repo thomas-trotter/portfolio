@@ -13,8 +13,20 @@
   --color-border:     oklch(0.92 0.006 90);
   --color-input:      oklch(0.87 0.006 90);
 
+  --color-success:            oklch(0.4 0.1 150);
+  --color-success-surface:    oklch(0.94 0.05 150);
+  --color-success-border:     oklch(0.7 0.1 150);
+  --color-success-foreground: oklch(0.25 0.05 150);
+  --color-success-muted:      oklch(0.3 0.05 150);
+
+  --color-error:            oklch(0.45 0.15 25);
+  --color-error-surface:    oklch(0.95 0.04 25);
+  --color-error-border:     oklch(0.7 0.15 25);
+  --color-error-foreground: oklch(0.35 0.1 25);
+  --color-error-strong:     oklch(0.55 0.18 25);
+
   --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular",
+  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular",
     Menlo, monospace;
 
   --text-display: 2.75rem; /* 44px */
@@ -67,6 +79,22 @@
 }
 
 @layer components {
+  .title-display {
+    @apply text-[2.375rem] font-bold leading-[1.15] tracking-[-0.02em] text-ink;
+  }
+
+  .page-title {
+    @apply mb-3.5 text-[2.375rem] font-bold leading-[1.15] tracking-[-0.02em] text-ink;
+  }
+
+  .section-heading {
+    @apply mb-[18px] text-[21px] font-semibold tracking-[-0.01em];
+  }
+
+  .back-link {
+    @apply block font-mono text-xs text-muted transition-colors hover:text-ink;
+  }
+
   .section-label {
     @apply text-label uppercase text-muted;
   }
@@ -134,5 +162,22 @@
   .input:focus {
     border-color: var(--color-accent);
     outline: none;
+  }
+
+  .prose-mdx :not(pre) > code {
+    @apply rounded bg-surface px-1.5 py-0.5 font-mono text-[0.9em] text-ink;
+  }
+
+  .prose-mdx figure[data-rehype-pretty-code-figure] {
+    @apply my-6;
+  }
+
+  .prose-mdx figure[data-rehype-pretty-code-figure] pre {
+    @apply overflow-x-auto rounded-[10px] border border-border bg-surface p-4
+      font-mono text-[13px] leading-[1.65] text-ink;
+  }
+
+  .prose-mdx figure[data-rehype-pretty-code-figure] code {
+    @apply font-mono;
   }
 }

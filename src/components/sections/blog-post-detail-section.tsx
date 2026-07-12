@@ -1,13 +1,16 @@
 import Link from "next/link";
-import Placeholder from "@/components/ui/placeholder";
+import { MDXContent, blogMdxComponents } from "@/components/mdx";
+import BackLink from "@/components/ui/back-link";
+import ContentImage from "@/components/ui/content-image";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
+import { IMAGE_SIZES } from "@/lib/config/images";
 import {
-  blogPostHref,
+  getAboutPage,
   getRelatedPosts,
   type BlogPostDetail,
-} from "@/lib/mocks/blog";
-import { site } from "@/lib/mocks/site";
+} from "@/lib/content";
+import { site } from "@/.velite";
 
 type BlogPostDetailSectionProps = {
   post: BlogPostDetail;
@@ -16,39 +19,34 @@ type BlogPostDetailSectionProps = {
 export default function BlogPostDetailSection({
   post,
 }: BlogPostDetailSectionProps) {
-  const relatedPosts = getRelatedPosts(post.id);
+  const relatedPosts = getRelatedPosts(post.slug);
+  const about = getAboutPage();
 
   return (
     <Section className="mx-auto max-w-[600px]">
-      <Link
-        href="/blog"
-        className="mb-[18px] block font-mono text-xs text-muted transition-colors hover:text-ink"
-      >
-        ← Back to blog
-      </Link>
+      <BackLink href="/blog" className="mb-[18px]">
+        Back to blog
+      </BackLink>
 
-      <h1 className="mb-3.5 text-[2.375rem] font-bold leading-[1.15] tracking-[-0.02em] text-ink">
-        {post.title}
-      </h1>
+      <h1 className="page-title">{post.title}</h1>
 
       <p className="mb-6 font-mono text-xs text-muted">
         {post.date} · {post.readTime}
       </p>
 
-      <Placeholder className="mb-6 h-[220px]">[ cover image ]</Placeholder>
+      {post.cover ? (
+        <ContentImage
+          src={post.cover.src}
+          blurDataURL={post.cover.blurDataURL}
+          alt={`Cover image for ${post.title}`}
+          className="mb-6 h-[220px] rounded-[10px] border border-border"
+          sizes={IMAGE_SIZES.blogCover}
+          priority
+          fallbackLabel="[ cover image ]"
+        />
+      ) : null}
 
-      {post.body.map((paragraph, index) => (
-        <div key={index}>
-          <p className="mb-3.5 text-[15px] leading-[1.7] text-ink/80">
-            {paragraph}
-          </p>
-          {index === 1 && (
-            <Placeholder className="my-[18px] h-[130px]">
-              [ inline image / code block ]
-            </Placeholder>
-          )}
-        </div>
-      ))}
+      <MDXContent code={post.code} components={blogMdxComponents} />
 
       <div className="mb-[26px] mt-1 flex flex-wrap gap-2">
         {post.tags.map((tag) => (
@@ -59,26 +57,37 @@ export default function BlogPostDetailSection({
       </div>
 
       <div className="mb-8 flex gap-3.5 border-t border-border pt-[22px]">
-        <Placeholder className="h-[46px] w-[46px] shrink-0 rounded-full">
-          me
-        </Placeholder>
+        <ContentImage
+          src={about.photoSrc}
+          alt={`Photo of ${site.name}`}
+          className="h-[46px] w-[46px] shrink-0 rounded-full"
+          sizes={IMAGE_SIZES.avatar}
+          fallbackLabel="me"
+        />
         <div>
           <p className="text-sm font-semibold">{site.name}</p>
-          <p className="font-mono text-xs text-muted">MSci AI student</p>
+          <p className="font-mono text-xs text-muted">{site.subtitle}</p>
         </div>
       </div>
 
-      <h2 className="mb-[18px] text-[21px] font-semibold tracking-[-0.01em]">
-        More posts
-      </h2>
+      <h2 className="section-heading">More posts</h2>
       <div className="flex gap-[26px]">
         {relatedPosts.map((relatedPost) => (
           <Link
-            key={relatedPost.id}
-            href={blogPostHref(relatedPost.id)}
+            key={relatedPost.slug}
+            href={relatedPost.permalink}
             className="min-w-0 flex-1 transition-opacity hover:opacity-90"
           >
-            <Placeholder className="mb-2 h-20">[ thumb ]</Placeholder>
+            {relatedPost.cover ? (
+              <ContentImage
+                src={relatedPost.cover.src}
+                blurDataURL={relatedPost.cover.blurDataURL}
+                alt={`Cover image for ${relatedPost.title}`}
+                className="mb-2 h-20 rounded-[10px] border border-border"
+                sizes="200px"
+                fallbackLabel="[ thumb ]"
+              />
+            ) : null}
             <p className="text-sm font-semibold">{relatedPost.title}</p>
           </Link>
         ))}

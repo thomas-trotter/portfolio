@@ -1,17 +1,28 @@
 import Link from "next/link";
-import Placeholder from "@/components/ui/placeholder";
-import { blogPostHref, type BlogPostSummary } from "@/lib/mocks/blog";
+import ContentImage from "@/components/ui/content-image";
+import { IMAGE_SIZES } from "@/lib/config/images";
+import type { BlogPostSummary } from "@/lib/content";
 
 type BlogPostListItemProps = {
   post: BlogPostSummary;
 };
 
 export default function BlogPostListItem({ post }: BlogPostListItemProps) {
-  const content = (
-    <>
-      <Placeholder className="h-[100px] w-full shrink-0 sm:w-[150px]">
-        [ thumb ]
-      </Placeholder>
+  return (
+    <Link
+      href={post.permalink}
+      className="flex flex-col gap-5 transition-opacity hover:opacity-90 sm:flex-row"
+    >
+      {post.cover ? (
+        <ContentImage
+          src={post.cover.src}
+          blurDataURL={post.cover.blurDataURL}
+          alt={`Cover image for ${post.title}`}
+          className="h-[100px] w-full shrink-0 sm:w-[150px]"
+          sizes={IMAGE_SIZES.blogCover}
+          fallbackLabel="[ thumb ]"
+        />
+      ) : null}
       <div className="min-w-0 flex-1">
         <h2 className="mb-1.5 text-lg font-semibold">{post.title}</h2>
         <p className="mb-2 font-mono text-xs text-muted">
@@ -19,15 +30,6 @@ export default function BlogPostListItem({ post }: BlogPostListItemProps) {
         </p>
         <p className="text-sm leading-[1.7] text-ink/80">{post.excerpt}</p>
       </div>
-    </>
-  );
-
-  return (
-    <Link
-      href={blogPostHref(post.id)}
-      className="flex flex-col gap-5 transition-opacity hover:opacity-90 sm:flex-row"
-    >
-      {content}
     </Link>
   );
 }

@@ -1,8 +1,12 @@
-import Link from "next/link";
-import Placeholder from "@/components/ui/placeholder";
+import { ArrowUpRight } from "lucide-react";
+import { MDXContent, projectMdxComponents } from "@/components/mdx";
+import BackLink from "@/components/ui/back-link";
+import ContentImage from "@/components/ui/content-image";
+import DetailSidebar from "@/components/ui/detail-sidebar";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
-import type { ProjectDetail } from "@/lib/mocks/projects";
+import { IMAGE_SIZES } from "@/lib/config/images";
+import type { ProjectDetail } from "@/lib/content";
 
 type ProjectDetailSectionProps = {
   project: ProjectDetail;
@@ -13,13 +17,10 @@ export default function ProjectDetailSection({
 }: ProjectDetailSectionProps) {
   return (
     <div className="flex flex-col md:flex-row">
-      <aside className="w-full shrink-0 border-b border-border px-8 py-8 md:sticky md:top-0 md:w-60 md:self-start md:border-b-0 md:border-r">
-        <Link
-          href="/projects"
-          className="mb-5 block font-mono text-xs text-muted transition-colors hover:text-ink"
-        >
-          ← Back to projects
-        </Link>
+      <DetailSidebar>
+        <BackLink href="/projects" className="mb-5">
+          Back to projects
+        </BackLink>
 
         <p className="mb-1.5 font-mono text-xs font-semibold text-ink">Role</p>
         <p className="mb-4 text-[13px] leading-[1.7] text-ink/80">
@@ -43,40 +44,37 @@ export default function ProjectDetailSection({
             <a
               key={link.label}
               href={link.href}
-              className="text-[13px] text-accent transition-opacity hover:opacity-80"
+              className="inline-flex items-center gap-1 text-[13px] text-accent transition-opacity hover:opacity-80"
             >
-              {link.label} →
+              {link.label}
+              <ArrowUpRight className="size-3 shrink-0" aria-hidden />
             </a>
           ))}
         </div>
-      </aside>
+      </DetailSidebar>
 
       <Section className="min-w-0 flex-1">
-        <h1 className="mb-3.5 text-[2.375rem] font-bold leading-[1.15] tracking-[-0.02em] text-ink">
-          {project.name}
-        </h1>
+        <h1 className="page-title">{project.name}</h1>
 
-        <Placeholder className="mb-[26px] h-[220px]">
-          [ hero screenshot / demo ]
-        </Placeholder>
+        {project.hero ? (
+          <ContentImage
+            src={project.hero.src}
+            width={project.hero.width}
+            height={project.hero.height}
+            blurDataURL={project.hero.blurDataURL}
+            alt={`Hero screenshot of ${project.name}`}
+            className="mb-[26px] rounded-[10px] border border-border"
+            sizes={IMAGE_SIZES.projectHero}
+            layout="intrinsic"
+            objectFit="contain"
+            priority
+            fallbackLabel="[ hero screenshot / demo ]"
+          />
+        ) : null}
 
-        <h2 className="mb-[18px] text-[21px] font-semibold tracking-[-0.01em]">
-          Overview
-        </h2>
-        <p className="text-[15px] leading-[1.7] text-ink/80">
-          {project.overview}
-        </p>
-
-        <h2 className="mb-[18px] mt-[26px] text-[21px] font-semibold tracking-[-0.01em]">
-          Problem &amp; approach
-        </h2>
-        <p className="text-[15px] leading-[1.7] text-ink/80">
-          {project.problemApproach}
-        </p>
-
-        <Placeholder className="mt-4 h-[160px]">
-          [ diagram / screenshot ]
-        </Placeholder>
+        <div className="[&>h2:not(:first-child)]:mt-[26px]">
+          <MDXContent code={project.code} components={projectMdxComponents} />
+        </div>
       </Section>
     </div>
   );

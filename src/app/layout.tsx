@@ -1,35 +1,38 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import classNames from "classnames";
-import { rootMetadata } from "@/lib/metadata";
+import { rootMetadata } from "@/lib/seo/metadata";
 import "./globals.css";
 
 const jakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
-})
+});
 
 const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
-})
+});
+
+type RootLayoutProps = {
+  readonly children: React.ReactNode;
+}
 
 export const metadata: Metadata = rootMetadata;
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: RootLayoutProps) {
   return (
     <html
       lang="en"
       className={classNames(
+        "min-h-dvh",
         jakartaSans.variable,
         jetBrainsMono.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="flex min-h-dvh flex-col">
         {children}
       </body>
     </html>
