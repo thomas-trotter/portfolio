@@ -2,6 +2,7 @@ import Link from "next/link";
 import Card from "@/components/ui/card";
 import ContentImage from "@/components/ui/content-image";
 import Tag from "@/components/ui/tag";
+import { IMAGE_SIZES } from "@/lib/config/images";
 import type { ProjectSummary } from "@/lib/content";
 
 type ProjectCardProps = {
@@ -17,11 +18,13 @@ export default function ProjectCard({
       className="block transition-opacity hover:opacity-90"
     >
       <Card>
-        {project.thumbnailSrc ? (
+        {project.thumbnail ? (
           <ContentImage
-            src={project.thumbnailSrc}
+            src={project.thumbnail.src}
+            blurDataURL={project.thumbnail.blurDataURL}
             alt={`Screenshot of ${project.name}`}
             className="mb-3.5 h-[120px]"
+            sizes={IMAGE_SIZES.cardThumbnail}
             fallbackLabel="[ project screenshot ]"
           />
         ) : null}
