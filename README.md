@@ -1,6 +1,6 @@
 # Portfolio
 
-Personal portfolio and blog for [Thomas Trotter](https://portfolio-thomas-trotter1.vercel.app) — built with Next.js 16, React 19, TypeScript, and a type-safe MDX content pipeline powered by [Velite](https://velite.js.org).
+Personal portfolio and blog for [Thomas Trotter](https://www.thomastrotter.dev) — built with Next.js 16, React 19, TypeScript, and a type-safe MDX content pipeline powered by [Velite](https://velite.js.org).
 
 ![Homepage](./content/projects/portfolio-website/assets/homepage.png)
 
@@ -49,7 +49,7 @@ Open [http://localhost:3000](http://localhost:3000). The dev server watches `con
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `RESEND_API_KEY` | For contact form | API key from [Resend](https://resend.com) |
-| `NEXT_PUBLIC_SITE_URL` | Production | Canonical site URL (e.g. `https://yoursite.vercel.app`) — used in OG tags, sitemap, and canonical URLs |
+| `NEXT_PUBLIC_SITE_URL` | Production | Canonical site URL (e.g. `https://www.thomastrotter.dev`) — used in OG tags, sitemap, and canonical URLs |
 
 Set both in Vercel project settings before deploying.
 
