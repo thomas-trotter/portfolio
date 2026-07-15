@@ -29,7 +29,7 @@ function buildSocialMetadata(title: string, description: string, url?: string) {
       type: "website" as const,
     },
     twitter: {
-      card: "summary" as const,
+      card: "summary_large_image" as const,
       title,
       description,
     },

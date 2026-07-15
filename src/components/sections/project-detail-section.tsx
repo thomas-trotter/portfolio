@@ -5,6 +5,7 @@ import ContentImage from "@/components/ui/content-image";
 import DetailSidebar from "@/components/ui/detail-sidebar";
 import Section from "@/components/ui/section";
 import Tag from "@/components/ui/tag";
+import { IMAGE_SIZES } from "@/lib/config/images";
 import type { ProjectDetail } from "@/lib/content";
 
 type ProjectDetailSectionProps = {
@@ -55,23 +56,25 @@ export default function ProjectDetailSection({
       <Section className="min-w-0 flex-1">
         <h1 className="page-title">{project.name}</h1>
 
-        <ContentImage
-          src={project.heroSrc}
-          alt={`Hero screenshot of ${project.name}`}
-          className="mb-[26px] h-[220px]"
-          fallbackLabel="[ hero screenshot / demo ]"
-        />
+        {project.hero ? (
+          <ContentImage
+            src={project.hero.src}
+            width={project.hero.width}
+            height={project.hero.height}
+            blurDataURL={project.hero.blurDataURL}
+            alt={`Hero screenshot of ${project.name}`}
+            className="mb-[26px] rounded-[10px] border border-border"
+            sizes={IMAGE_SIZES.projectHero}
+            layout="intrinsic"
+            objectFit="contain"
+            priority
+            fallbackLabel="[ hero screenshot / demo ]"
+          />
+        ) : null}
 
         <div className="[&>h2:not(:first-child)]:mt-[26px]">
           <MDXContent code={project.code} components={projectMdxComponents} />
         </div>
-
-        <ContentImage
-          src={project.diagramSrc}
-          alt={`Diagram for ${project.name}`}
-          className="mt-4 h-[160px]"
-          fallbackLabel="[ diagram / screenshot ]"
-        />
       </Section>
     </div>
   );

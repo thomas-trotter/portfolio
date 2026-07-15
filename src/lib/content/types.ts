@@ -6,6 +6,13 @@ export type ContentTag = {
   variant: "accent" | "muted";
 };
 
+export type ContentImageAsset = {
+  src: string;
+  width: number;
+  height: number;
+  blurDataURL: string;
+};
+
 export type ProjectCategory = (typeof projectCategories)[number];
 export type ProjectFilter = "All" | ProjectCategory;
 export type ProjectLink = Project["links"][number];
@@ -17,7 +24,7 @@ export type BlogPostDetail = {
   date: string;
   readTime: string;
   excerpt: string;
-  coverSrc: string;
+  cover?: ContentImageAsset;
   code: string;
   tags: readonly ContentTag[];
   permalink: string;
@@ -25,16 +32,15 @@ export type BlogPostDetail = {
 
 export type BlogPostSummary = Pick<
   BlogPostDetail,
-  "slug" | "title" | "date" | "readTime" | "excerpt" | "coverSrc" | "permalink"
+  "slug" | "title" | "date" | "readTime" | "excerpt" | "cover" | "permalink"
 >;
 
 export type ProjectDetail = {
   slug: string;
   name: string;
   description: string;
-  thumbnailSrc: string;
-  heroSrc: string;
-  diagramSrc: string;
+  thumbnail?: ContentImageAsset;
+  hero?: ContentImageAsset;
   tags: readonly ContentTag[];
   categories: readonly ProjectCategory[];
   featured: boolean;
@@ -47,7 +53,7 @@ export type ProjectDetail = {
 
 export type ProjectSummary = Pick<
   ProjectDetail,
-  "slug" | "name" | "description" | "tags" | "categories" | "thumbnailSrc" | "permalink"
+  "slug" | "name" | "description" | "tags" | "categories" | "thumbnail" | "permalink"
 >;
 
 export type Experience = {

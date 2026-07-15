@@ -10,6 +10,10 @@ if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  images: {
+    formats: ["image/avif", "image/webp"],
+    qualities: [75, 90],
+  },
 };
 
 export default nextConfig;

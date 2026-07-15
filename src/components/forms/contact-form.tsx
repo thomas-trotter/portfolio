@@ -1,40 +1,39 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useState } from "react";
 import { Check, CircleAlert } from "lucide-react";
 import FormField from "@/components/ui/form-field";
+import { contactConfig } from "@/lib/config/contact";
 import { sendContactEmail, type ContactState } from "@/lib/actions/contact";
 
 const initialState: ContactState = { ok: false };
 
-export default function ContactForm() {
+type ContactFormBodyProps = {
+  onSendAnother: () => void;
+};
+
+function ContactFormBody({ onSendAnother }: ContactFormBodyProps) {
   const [state, action, isPending] = useActionState(
     sendContactEmail,
     initialState,
   );
-  const [showSuccess, setShowSuccess] = useState(false);
 
-  useEffect(() => {
-    if (state.ok) setShowSuccess(true);
-  }, [state.ok]);
-
-  if (showSuccess && state.ok) {
+  if (state.ok) {
     return (
-      <div className="flex flex-1 flex-col items-start gap-3.5 rounded-[10px] border border-[oklch(0.7_0.1_150)] bg-[oklch(0.94_0.05_150)] p-7">
-        <div className="flex size-11 items-center justify-center rounded-full bg-[oklch(0.4_0.1_150)] text-white">
+      <div className="flex flex-1 flex-col items-start gap-3.5 rounded-[10px] border border-success-border bg-success-surface p-7">
+        <div className="flex size-11 items-center justify-center rounded-full bg-success text-white">
           <Check className="size-5" strokeWidth={2.5} aria-hidden />
         </div>
-        <p className="text-lg font-bold text-[oklch(0.25_0.05_150)]">
+        <p className="text-lg font-bold text-success-foreground">
           Message sent
         </p>
-        <p className="m-0 text-body leading-[1.7] text-[oklch(0.3_0.05_150)]">
-          {state.message ??
-            "Thanks for reaching out — I'll get back to you within a couple of days."}
+        <p className="m-0 text-body leading-[1.7] text-success-muted">
+          {state.message ?? contactConfig.messages.success}
         </p>
         <button
           type="button"
           className="btn-outline"
-          onClick={() => setShowSuccess(false)}
+          onClick={onSendAnother}
         >
           Send another message
         </button>
@@ -45,12 +44,12 @@ export default function ContactForm() {
   return (
     <form className="flex flex-1 flex-col gap-3.5" action={action}>
       {state.message && !state.ok && (
-        <div className="flex items-start gap-2.5 rounded-lg border border-[oklch(0.7_0.15_25)] bg-[oklch(0.95_0.04_25)] px-3.5 py-3">
+        <div className="flex items-start gap-2.5 rounded-lg border border-error-border bg-error-surface px-3.5 py-3">
           <CircleAlert
-            className="size-4 shrink-0 text-[oklch(0.45_0.15_25)]"
+            className="size-4 shrink-0 text-error"
             aria-hidden
           />
-          <p className="m-0 text-[13px] leading-[1.7] text-[oklch(0.35_0.1_25)]">
+          <p className="m-0 text-[13px] leading-[1.7] text-error-foreground">
             {state.message}
           </p>
         </div>
@@ -58,25 +57,33 @@ export default function ContactForm() {
 
       <FormField
         name="name"
+        label="Name"
         placeholder="Name"
+        defaultValue={state.values?.name}
         error={state.errors?.name}
         autoComplete="name"
       />
       <FormField
         name="email"
         type="email"
+        label="Email"
         placeholder="Email"
+        defaultValue={state.values?.email}
         error={state.errors?.email}
         autoComplete="email"
       />
       <FormField
         name="subject"
+        label="Subject"
         placeholder="Subject"
+        defaultValue={state.values?.subject}
         error={state.errors?.subject}
       />
       <FormField
         name="message"
+        label="Message"
         placeholder="Message"
+        defaultValue={state.values?.message}
         error={state.errors?.message}
         multiline
       />
@@ -87,5 +94,16 @@ export default function ContactForm() {
         {isPending ? "Sending..." : "Send message"}
       </button>
     </form>
+  );
+}
+
+export default function ContactForm() {
+  const [formKey, setFormKey] = useState(0);
+
+  return (
+    <ContactFormBody
+      key={formKey}
+      onSendAnother={() => setFormKey((key) => key + 1)}
+    />
   );
 }

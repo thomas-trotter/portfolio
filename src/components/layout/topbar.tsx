@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 
 import NavLink from "@/components/ui/nav-link";
@@ -12,10 +12,7 @@ import { topbarLinks } from "@/lib/config/site";
 export default function TopBar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  const closeMenu = () => setOpen(false);
 
   return (
     <header className="border-b border-border bg-background">
@@ -62,6 +59,7 @@ export default function TopBar() {
                   {...link}
                   pathname={pathname}
                   className="block"
+                  onClick={closeMenu}
                 />
               </li>
             ))}

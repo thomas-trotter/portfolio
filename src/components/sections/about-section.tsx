@@ -39,14 +39,6 @@ export default function AboutSection() {
           {about.availability}
         </p>
 
-        {/*<Button
-          variant="outline"
-          href={about.cvHref}
-          className="w-full px-0 py-2.5 text-[13px]"
-        >
-          Download CV
-        </Button>
-        */}
         <div className="mt-4 flex flex-wrap gap-2">
           {about.profileLinks.map((link) => (
             <Link key={link.label} href={link.href} className="tag-muted">

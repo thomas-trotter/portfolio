@@ -1,7 +1,14 @@
+import rehypePrettyCode from "rehype-pretty-code";
 import { defineCollection, defineConfig, s } from "velite";
-import { projectCategories } from "./src/lib/config/project-categories";
+import { projectCategories } from "@/lib/config/project-categories";
 
 export { projectCategories };
+
+function contentSlug(path: string, collectionPrefix: string) {
+  return path
+    .replace(new RegExp(`^${collectionPrefix}/`), "")
+    .replace(/\/index$/, "");
+}
 
 const site = defineCollection({
   name: "Site",
@@ -39,16 +46,20 @@ const blog = defineCollection({
       date: s.isodate(),
       tags: s.array(s.string()).default([]),
       featured: s.boolean().default(false),
+      cover: s.image().optional(),
       excerpt: s.excerpt(),
       metadata: s.metadata(),
       code: s.mdx(),
     })
-    .transform((data) => ({
-      ...data,
-      slug: data.slug.replace(/^blog\//, ""),
-      readTime: `${Math.max(1, Math.round(data.metadata.readingTime))} min read`,
-      permalink: `/blog/${data.slug.replace(/^blog\//, "")}`,
-    })),
+    .transform((data) => {
+      const slug = contentSlug(data.slug, "blog");
+      return {
+        ...data,
+        slug,
+        readTime: `${Math.max(1, Math.round(data.metadata.readingTime))} min read`,
+        permalink: `/blog/${slug}`,
+      };
+    }),
 });
 
 const projects = defineCollection({
@@ -67,13 +78,18 @@ const projects = defineCollection({
       links: s
         .array(s.object({ label: s.string(), href: s.string() }))
         .default([]),
+      thumbnail: s.image().optional(),
+      hero: s.image().optional(),
       code: s.mdx(),
     })
-    .transform((data) => ({
-      ...data,
-      slug: data.slug.replace(/^projects\//, ""),
-      permalink: `/projects/${data.slug.replace(/^projects\//, "")}`,
-    })),
+    .transform((data) => {
+      const slug = contentSlug(data.slug, "projects");
+      return {
+        ...data,
+        slug,
+        permalink: `/projects/${slug}`,
+      };
+    }),
 });
 
 const pages = defineCollection({
@@ -113,5 +129,16 @@ export default defineConfig({
     clean: true,
   },
   collections: { blog, projects, pages, site },
-  mdx: { rehypePlugins: [], remarkPlugins: [] },
+  mdx: {
+    rehypePlugins: [
+      [
+        rehypePrettyCode,
+        {
+          theme: "github-light",
+          keepBackground: false,
+        },
+      ],
+    ],
+    remarkPlugins: [],
+  },
 });

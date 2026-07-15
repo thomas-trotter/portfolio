@@ -5,10 +5,10 @@ import type {
   BlogPostDetail,
   BlogPostSummary,
   ContactPage,
+  ContentImageAsset,
   ContentTag,
   ProjectDetail,
   ProjectFilter,
-  ProjectSummary,
 } from "@/lib/content/types";
 
 export type {
@@ -16,6 +16,7 @@ export type {
   BlogPostDetail,
   BlogPostSummary,
   ContactPage,
+  ContentImageAsset,
   ContentTag,
   Experience,
   ProfileLink,
@@ -32,7 +33,6 @@ export const projectFilters: readonly ProjectFilter[] = [
   ...projectCategories,
 ];
 
-const PLACEHOLDER_IMAGE = "/placeholder.svg";
 const DEFAULT_HEADSHOT = "/headshot.png";
 
 function formatDisplayDate(isoDate: string): string {
@@ -50,6 +50,21 @@ function mapTags(tags: readonly string[]): ContentTag[] {
   }));
 }
 
+function mapVeliteImage(
+  image: { src: string; width: number; height: number; blurDataURL: string } | undefined,
+): ContentImageAsset | undefined {
+  if (!image) {
+    return undefined;
+  }
+
+  return {
+    src: image.src,
+    width: image.width,
+    height: image.height,
+    blurDataURL: image.blurDataURL,
+  };
+}
+
 function mapBlogPost(post: Blog): BlogPostDetail {
   return {
     slug: post.slug,
@@ -57,7 +72,7 @@ function mapBlogPost(post: Blog): BlogPostDetail {
     date: formatDisplayDate(post.date),
     readTime: post.readTime,
     excerpt: post.excerpt,
-    coverSrc: PLACEHOLDER_IMAGE,
+    cover: mapVeliteImage(post.cover),
     code: post.code,
     tags: mapTags(post.tags),
     permalink: post.permalink,
@@ -65,13 +80,15 @@ function mapBlogPost(post: Blog): BlogPostDetail {
 }
 
 function mapProject(project: Project): ProjectDetail {
+  const hero = mapVeliteImage(project.hero);
+  const thumbnail = mapVeliteImage(project.thumbnail) ?? hero;
+
   return {
     slug: project.slug,
     name: project.name,
     description: project.description,
-    thumbnailSrc: PLACEHOLDER_IMAGE,
-    heroSrc: PLACEHOLDER_IMAGE,
-    diagramSrc: PLACEHOLDER_IMAGE,
+    thumbnail,
+    hero,
     tags: mapTags(project.tags),
     categories: project.categories,
     featured: project.featured,
@@ -136,7 +153,23 @@ export function getRelatedPosts(
   slug: string,
   limit = 2,
 ): readonly BlogPostSummary[] {
-  return blogPosts.filter((post) => post.slug !== slug).slice(0, limit);
+  const current = getBlogPostBySlug(slug);
+  const candidates = blogPosts.filter((post) => post.slug !== slug);
+
+  if (!current || current.tags.length === 0) {
+    return candidates.slice(0, limit);
+  }
+
+  const currentTagLabels = new Set(current.tags.map((tag) => tag.label));
+
+  const ranked = candidates
+    .map((post) => ({
+      post,
+      overlap: post.tags.filter((tag) => currentTagLabels.has(tag.label)).length,
+    }))
+    .sort((a, b) => b.overlap - a.overlap);
+
+  return ranked.map(({ post }) => post).slice(0, limit);
 }
 
 export function getProjectBySlug(slug: string): ProjectDetail | undefined {
