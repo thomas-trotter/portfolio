@@ -3,6 +3,7 @@
 import { headers } from "next/headers";
 import { z } from "zod";
 import { Resend } from "resend";
+import { checkBotId } from "botid/server";
 import { contactConfig } from "@/lib/config/contact";
 import { isRateLimited } from "@/lib/rate-limit";
 import {
@@ -24,10 +25,21 @@ export async function sendContactEmail(
   _prev: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
+  
   const raw = Object.fromEntries(formData);
   const values = contactValuesFromFormData(raw);
   const parsed = contactSchema.safeParse(raw);
 
+  const verification = await checkBotId();
+ 
+  if (verification.isBot) {
+    return {
+      ok: false,
+      message: 'Access denied',
+      values,
+    };
+  }
+  
   if (!parsed.success) {
     return {
       ok: false,
