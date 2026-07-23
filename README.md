@@ -49,9 +49,10 @@ Open [http://localhost:3000](http://localhost:3000). The dev server watches `con
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `RESEND_API_KEY` | For contact form | API key from [Resend](https://resend.com) |
+| `CONTACT_EMAIL` | For contact form | Inbox for form submissions (not shown publicly) |
 | `NEXT_PUBLIC_SITE_URL` | Production | Canonical site URL (e.g. `https://www.thomastrotter.dev`) — used in OG tags, sitemap, and canonical URLs |
 
-Set both in Vercel project settings before deploying.
+Set these in Vercel project settings before deploying.
 
 ### Scripts
 
