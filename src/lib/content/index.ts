@@ -74,7 +74,6 @@ function mapBlogPost(post: Blog): BlogPostDetail {
     excerpt: post.excerpt,
     cover: mapVeliteImage(post.cover),
     code: post.code,
-    mdxId: post.mdxId,
     tags: mapTags(post.tags),
     permalink: post.permalink,
   };
@@ -97,7 +96,6 @@ function mapProject(project: Project): ProjectDetail {
     tools: project.tools,
     links: project.links,
     code: project.code,
-    mdxId: project.mdxId,
     permalink: project.permalink,
   };
 }
@@ -113,7 +111,6 @@ function mapAboutPage(page: Page): AboutPage {
     profileLinks: site.profileLinks,
     experience: page.experience,
     code: page.code,
-    mdxId: page.mdxId,
   };
 }
 
@@ -122,7 +119,6 @@ function mapContactPage(page: Page): ContactPage {
     location: site.location,
     profileLinks: site.profileLinks,
     code: page.code,
-    mdxId: page.mdxId,
   };
 }
 

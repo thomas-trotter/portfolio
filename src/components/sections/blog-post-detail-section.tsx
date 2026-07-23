@@ -46,7 +46,7 @@ export default function BlogPostDetailSection({
         />
       ) : null}
 
-      <MDXContent mdxId={post.mdxId} components={blogMdxComponents} />
+      <MDXContent code={post.code} components={blogMdxComponents} />
 
       <div className="mb-[26px] mt-1 flex flex-wrap gap-2">
         {post.tags.map((tag) => (

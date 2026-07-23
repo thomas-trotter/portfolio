@@ -2,30 +2,31 @@ import rehypePrettyCode from "rehype-pretty-code";
 import { defineCollection, defineConfig, s } from "velite";
 import { projectCategories } from "@/lib/config/project-categories";
 
-export { projectCategories };
-
-function contentSlug(path: string, collectionPrefix: string) {
-  return path
-    .replace(new RegExp(`^${collectionPrefix}/`), "")
+function contentSlug(filePath: string, collectionPrefix: string) {
+  return filePath
+    .replace(new RegExp("^" + collectionPrefix + "/"), "")
     .replace(/\/index$/, "");
+}
+
+function mdxPermalink(collection: string, slug: string) {
+  return "/" + collection + "/" + slug;
 }
 
 const site = defineCollection({
   name: "Site",
   pattern: "site.yaml",
   single: true,
-  schema: s
-    .object({
-      name: s.string(),
-      tagline: s.string(),
-      subtitle: s.string(),
-      location: s.string(),
-      copyrightYear: s.number(),
-      skills: s.array(s.string()).default([]),
-      profileLinks: s
-        .array(s.object({ label: s.string(), href: s.string() }))
-        .default([]),
-    })
+  schema: s.object({
+    name: s.string(),
+    tagline: s.string(),
+    subtitle: s.string(),
+    location: s.string(),
+    copyrightYear: s.number(),
+    skills: s.array(s.string()).default([]),
+    profileLinks: s
+      .array(s.object({ label: s.string(), href: s.string() }))
+      .default([]),
+  }),
 });
 
 const blog = defineCollection({
@@ -48,8 +49,9 @@ const blog = defineCollection({
       return {
         ...data,
         slug,
-        readTime: `${Math.max(1, Math.round(data.metadata.readingTime))} min read`,
-        permalink: `/blog/${slug}`,
+        permalink: mdxPermalink("blog", slug),
+        readTime:
+          Math.max(1, Math.round(data.metadata.readingTime)) + " min read",
       };
     }),
 });
@@ -79,7 +81,7 @@ const projects = defineCollection({
       return {
         ...data,
         slug,
-        permalink: `/projects/${slug}`,
+        permalink: mdxPermalink("projects", slug),
       };
     }),
 });
@@ -106,10 +108,13 @@ const pages = defineCollection({
         .default([]),
       code: s.mdx(),
     })
-    .transform((data) => ({
-      ...data,
-      slug: data.slug.replace(/^pages\//, ""),
-    })),
+    .transform((data) => {
+      const slug = contentSlug(data.slug, "pages");
+      return {
+        ...data,
+        slug,
+      };
+    }),
 });
 
 export default defineConfig({
@@ -125,10 +130,7 @@ export default defineConfig({
     rehypePlugins: [
       [
         rehypePrettyCode,
-        {
-          theme: "github-light",
-          keepBackground: false,
-        },
+        { theme: "github-light", keepBackground: false },
       ],
     ],
     remarkPlugins: [],

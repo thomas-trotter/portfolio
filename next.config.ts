@@ -1,13 +1,25 @@
 import type { NextConfig } from "next";
 import { withBotId } from "botid/next/config";
 
-const isDev = process.argv.indexOf("dev") !== -1;
-const isBuild = process.argv.indexOf("build") !== -1;
+function bootstrapVelite() {
+  if (process.env.VELITE_STARTED) {
+    return;
+  }
 
-if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
+  const isDev = process.argv.includes("dev");
+  const isBuild = process.argv.includes("build");
+  if (!isDev && !isBuild) {
+    return;
+  }
+
   process.env.VELITE_STARTED = "1";
-  import("velite").then(({ build }) => build({ watch: isDev, clean: !isDev }));
+
+  void import("velite").then(({ build }) => {
+    void build({ watch: isDev, clean: !isDev });
+  });
 }
+
+bootstrapVelite();
 
 const nextConfig: NextConfig = {
   reactCompiler: true,

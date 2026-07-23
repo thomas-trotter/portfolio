@@ -1,40 +1,35 @@
 import type { ComponentType } from "react";
-import { getMdxComponent } from "@/.velite/mdx-registry";
+import * as runtime from "react/jsx-runtime";
 import type { MdxComponents } from "@/components/mdx/types";
 
 const sharedComponents: Record<string, ComponentType> = {};
-const mdxComponentCache = new Map<string, ReturnType<typeof getMdxComponent>>();
+const mdxComponentCache = new Map<string, ComponentType<{ components?: MdxComponents }>>();
 
-function resolveMdxComponent(mdxId: string) {
-  const cached = mdxComponentCache.get(mdxId);
+function resolveMdxComponent(code: string) {
+  const cached = mdxComponentCache.get(code);
   if (cached) {
     return cached;
   }
 
-  const component = getMdxComponent(mdxId);
-  mdxComponentCache.set(mdxId, component);
+  const fn = new Function(code);
+  const component = fn({ ...runtime }).default as ComponentType<{
+    components?: MdxComponents;
+  }>;
+  mdxComponentCache.set(code, component);
   return component;
 }
 
-type MdxRendererProps = {
-  mdxId: string;
-  components?: MdxComponents;
-};
-
-function MdxRenderer({ mdxId, components }: MdxRendererProps) {
-  const Component = resolveMdxComponent(mdxId);
-  return <Component components={{ ...sharedComponents, ...components }} />;
-}
-
 type MDXContentProps = {
-  mdxId: string;
+  code: string;
   components?: MdxComponents;
 };
 
-export default function MDXContent({ mdxId, components }: MDXContentProps) {
+export default function MDXContent({ code, components }: MDXContentProps) {
+  const Component = resolveMdxComponent(code);
+
   return (
     <div className="prose-mdx">
-      <MdxRenderer mdxId={mdxId} components={components} />
+      <Component components={{ ...sharedComponents, ...components }} />
     </div>
   );
 }
