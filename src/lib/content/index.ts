@@ -117,7 +117,6 @@ function mapAboutPage(page: Page): AboutPage {
 function mapContactPage(page: Page): ContactPage {
   return {
     location: site.location,
-    email: site.email,
     profileLinks: site.profileLinks,
     code: page.code,
   };
