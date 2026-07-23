@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { MDXContent, contactMdxComponents } from "@/components/mdx";
 import ContactForm from "@/components/forms/contact-form";
 import Section from "@/components/ui/section";
@@ -14,15 +14,6 @@ export default function ContactSection() {
         <div className="flex-1">
           <h1 className="page-title">Let&apos;s talk</h1>
           <MDXContent code={contact.code} components={contactMdxComponents} />
-          <p className="mb-2 flex items-center gap-1.5 font-mono text-xs text-muted">
-            <Mail className="size-3 shrink-0" aria-hidden />
-            <a
-              href={`mailto:${contact.email}`}
-              className="text-ink transition-colors hover:text-accent"
-            >
-              {contact.email}
-            </a>
-          </p>
           <p className="mb-5.5 flex items-center gap-1.5 font-mono text-xs text-muted">
             <MapPin className="size-3 shrink-0" aria-hidden />
             {contact.location}
