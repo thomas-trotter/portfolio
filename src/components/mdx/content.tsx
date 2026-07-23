@@ -1,47 +1,40 @@
-import * as runtime from "react/jsx-runtime";
 import type { ComponentType } from "react";
+import { getMdxComponent } from "@/.velite/mdx-registry";
 import type { MdxComponents } from "@/components/mdx/types";
 
-type MdxComponent = ComponentType<{
-  components?: Record<string, ComponentType>;
-}>;
-
 const sharedComponents: Record<string, ComponentType> = {};
-const mdxComponentCache = new Map<string, MdxComponent>();
+const mdxComponentCache = new Map<string, ReturnType<typeof getMdxComponent>>();
 
-function getMDXComponent(code: string): MdxComponent {
-  const cached = mdxComponentCache.get(code);
+function resolveMdxComponent(mdxId: string) {
+  const cached = mdxComponentCache.get(mdxId);
   if (cached) {
     return cached;
   }
 
-  const fn = new Function(code);
-  const component = fn({ ...runtime }).default as MdxComponent;
-  mdxComponentCache.set(code, component);
+  const component = getMdxComponent(mdxId);
+  mdxComponentCache.set(mdxId, component);
   return component;
 }
 
 type MdxRendererProps = {
-  code: string;
+  mdxId: string;
   components?: MdxComponents;
 };
 
-function MdxRenderer({ code, components }: MdxRendererProps) {
-  const Component = getMDXComponent(code);
-  // Velite compiles MDX to a stable, module-cached component per code string.
-  // eslint-disable-next-line react-hooks/static-components -- not created during render; cached by code hash
+function MdxRenderer({ mdxId, components }: MdxRendererProps) {
+  const Component = resolveMdxComponent(mdxId);
   return <Component components={{ ...sharedComponents, ...components }} />;
 }
 
 type MDXContentProps = {
-  code: string;
+  mdxId: string;
   components?: MdxComponents;
 };
 
-export default function MDXContent({ code, components }: MDXContentProps) {
+export default function MDXContent({ mdxId, components }: MDXContentProps) {
   return (
     <div className="prose-mdx">
-      <MdxRenderer code={code} components={components} />
+      <MdxRenderer mdxId={mdxId} components={components} />
     </div>
   );
 }
