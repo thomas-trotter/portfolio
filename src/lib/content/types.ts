@@ -77,7 +77,6 @@ export type AboutPage = {
 
 export type ContactPage = {
   location: string;
-  email: string;
   profileLinks: readonly ProfileLink[];
   code: string;
 };
