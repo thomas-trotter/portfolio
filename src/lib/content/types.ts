@@ -26,6 +26,7 @@ export type BlogPostDetail = {
   excerpt: string;
   cover?: ContentImageAsset;
   code: string;
+  mdxId: string;
   tags: readonly ContentTag[];
   permalink: string;
 };
@@ -48,6 +49,7 @@ export type ProjectDetail = {
   tools: readonly string[];
   links: readonly ProjectLink[];
   code: string;
+  mdxId: string;
   permalink: string;
 };
 
@@ -73,10 +75,12 @@ export type AboutPage = {
   profileLinks: readonly ProfileLink[];
   experience: readonly Experience[];
   code: string;
+  mdxId: string;
 };
 
 export type ContactPage = {
   location: string;
   profileLinks: readonly ProfileLink[];
   code: string;
+  mdxId: string;
 };
