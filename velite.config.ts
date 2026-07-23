@@ -19,7 +19,6 @@ const site = defineCollection({
       name: s.string(),
       tagline: s.string(),
       subtitle: s.string(),
-      email: s.string(),
       location: s.string(),
       copyrightYear: s.number(),
       skills: s.array(s.string()).default([]),
@@ -27,13 +26,6 @@ const site = defineCollection({
         .array(s.object({ label: s.string(), href: s.string() }))
         .default([]),
     })
-    .transform((data) => ({
-      ...data,
-      profileLinks: [
-        ...data.profileLinks,
-        { label: "Email", href: `mailto:${data.email}` },
-      ],
-    })),
 });
 
 const blog = defineCollection({
