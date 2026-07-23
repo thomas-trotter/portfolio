@@ -25,21 +25,19 @@ export async function sendContactEmail(
   _prev: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
-  
+  const verification = await checkBotId();
+
+  if (verification.isBot) {
+    return {
+      ok: false,
+      message: "Access denied",
+    };
+  }
+
   const raw = Object.fromEntries(formData);
   const values = contactValuesFromFormData(raw);
   const parsed = contactSchema.safeParse(raw);
 
-  const verification = await checkBotId();
- 
-  if (verification.isBot) {
-    return {
-      ok: false,
-      message: 'Access denied',
-      values,
-    };
-  }
-  
   if (!parsed.success) {
     return {
       ok: false,
