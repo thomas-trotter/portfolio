@@ -73,7 +73,7 @@ export default function ProjectDetailSection({
         ) : null}
 
         <div className="[&>h2:not(:first-child)]:mt-[26px]">
-          <MDXContent code={project.code} components={projectMdxComponents} />
+          <MDXContent mdxId={project.mdxId} components={projectMdxComponents} />
         </div>
       </Section>
     </div>
