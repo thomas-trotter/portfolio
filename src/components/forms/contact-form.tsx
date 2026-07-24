@@ -88,7 +88,13 @@ function ContactFormBody({ onSendAnother }: ContactFormBodyProps) {
         multiline
       />
 
-      <input name="website" className="hidden" tabIndex={-1} autoComplete="off" />
+      <input
+        name="website"
+        className="hidden"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden
+      />
 
       <button type="submit" className="btn-primary self-start">
         {isPending ? "Sending..." : "Send message"}

@@ -1,4 +1,8 @@
 import { blog, pages, projects, site, type Blog, type Page, type Project } from "@/.velite";
+import {
+  getMdxComponent,
+  type MdxComponentKey,
+} from "@/.velite/mdx/registry";
 import { projectCategories } from "@/lib/config/project-categories";
 import type {
   AboutPage,
@@ -34,6 +38,10 @@ export const projectFilters: readonly ProjectFilter[] = [
 ];
 
 const DEFAULT_HEADSHOT = "/headshot.png";
+
+function mdxComponentKey(collection: string, slug: string): MdxComponentKey {
+  return `${collection}/${slug}` as MdxComponentKey;
+}
 
 function formatDisplayDate(isoDate: string): string {
   return new Date(isoDate).toLocaleDateString("en-US", {
@@ -73,7 +81,7 @@ function mapBlogPost(post: Blog): BlogPostDetail {
     readTime: post.readTime,
     excerpt: post.excerpt,
     cover: mapVeliteImage(post.cover),
-    code: post.code,
+    MdxComponent: getMdxComponent(mdxComponentKey("blog", post.slug)),
     tags: mapTags(post.tags),
     permalink: post.permalink,
   };
@@ -95,7 +103,7 @@ function mapProject(project: Project): ProjectDetail {
     role: project.role,
     tools: project.tools,
     links: project.links,
-    code: project.code,
+    MdxComponent: getMdxComponent(mdxComponentKey("projects", project.slug)),
     permalink: project.permalink,
   };
 }
@@ -110,16 +118,15 @@ function mapAboutPage(page: Page): AboutPage {
     skills: site.skills,
     profileLinks: site.profileLinks,
     experience: page.experience,
-    code: page.code,
+    MdxComponent: getMdxComponent(mdxComponentKey("pages", page.slug)),
   };
 }
 
 function mapContactPage(page: Page): ContactPage {
   return {
     location: site.location,
-    email: site.email,
     profileLinks: site.profileLinks,
-    code: page.code,
+    MdxComponent: getMdxComponent(mdxComponentKey("pages", page.slug)),
   };
 }
 

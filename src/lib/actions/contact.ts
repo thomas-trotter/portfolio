@@ -3,7 +3,7 @@
 import { headers } from "next/headers";
 import { z } from "zod";
 import { Resend } from "resend";
-import { site } from "@/.velite";
+import { checkBotId } from "botid/server";
 import { contactConfig } from "@/lib/config/contact";
 import { isRateLimited } from "@/lib/rate-limit";
 import {
@@ -25,6 +25,15 @@ export async function sendContactEmail(
   _prev: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
+  const verification = await checkBotId();
+
+  if (verification.isBot) {
+    return {
+      ok: false,
+      message: "Access denied",
+    };
+  }
+
   const raw = Object.fromEntries(formData);
   const values = contactValuesFromFormData(raw);
   const parsed = contactSchema.safeParse(raw);
@@ -58,9 +67,14 @@ export async function sendContactEmail(
     };
   }
 
+  const contactEmail = process.env.CONTACT_EMAIL;
+  if (!contactEmail) {
+    return { ok: false, message: contactConfig.messages.error, values };
+  }
+
   const { error } = await resend.emails.send({
     from: contactConfig.from,
-    to: site.email,
+    to: contactEmail,
     replyTo: email,
     subject: `[Portfolio] ${subject}`,
     text: `From: ${name} <${email}>\n\n${message}`,
