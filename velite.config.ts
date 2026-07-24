@@ -1,6 +1,7 @@
 import rehypePrettyCode from "rehype-pretty-code";
 import { defineCollection, defineConfig, s } from "velite";
 import { projectCategories } from "@/lib/config/project-categories";
+import { generateMdxModules } from "./scripts/mdx/generate-mdx-modules";
 
 function contentSlug(filePath: string, collectionPrefix: string) {
   return filePath
@@ -126,6 +127,9 @@ export default defineConfig({
     clean: true,
   },
   collections: { blog, projects, pages, site },
+  prepare: async (data, { config }) => {
+    await generateMdxModules(data as Record<string, unknown>, config.output.data);
+  },
   mdx: {
     rehypePlugins: [
       [

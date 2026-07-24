@@ -25,7 +25,8 @@
     // Path aliases
     "paths": {
       "@/*": ["./src/*"],
-      "@/.velite": ["./.velite"]
+      "@/.velite": ["./.velite"],
+      "@/.velite/*": ["./.velite/*"]
     }
   },
   "include": [

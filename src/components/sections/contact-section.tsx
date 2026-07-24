@@ -13,7 +13,7 @@ export default function ContactSection() {
       <div className="flex flex-col gap-12 lg:flex-row">
         <div className="flex-1">
           <h1 className="page-title">Let&apos;s talk</h1>
-          <MDXContent code={contact.code} components={contactMdxComponents} />
+          <MDXContent Component={contact.MdxComponent} components={contactMdxComponents} />
           <p className="mb-5.5 flex items-center gap-1.5 font-mono text-xs text-muted">
             <MapPin className="size-3 shrink-0" aria-hidden />
             {contact.location}
