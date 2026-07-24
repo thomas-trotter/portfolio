@@ -51,7 +51,7 @@ export default function AboutSection() {
       <Section className="min-w-0 flex-1">
         <h1 className="page-title">About me</h1>
 
-        <MDXContent code={about.code} components={aboutMdxComponents} />
+        <MDXContent Component={about.MdxComponent} components={aboutMdxComponents} />
 
         <h2 className="section-heading">Skills</h2>
         <div className="mb-7 flex flex-wrap gap-2.5">

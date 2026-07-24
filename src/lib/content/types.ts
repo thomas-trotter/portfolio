@@ -1,4 +1,5 @@
 import type { Project } from "@/.velite";
+import type { CompiledMdxComponent } from "@/.velite/mdx/registry";
 import type { projectCategories } from "@/lib/config/project-categories";
 
 export type ContentTag = {
@@ -25,7 +26,7 @@ export type BlogPostDetail = {
   readTime: string;
   excerpt: string;
   cover?: ContentImageAsset;
-  code: string;
+  MdxComponent: CompiledMdxComponent;
   tags: readonly ContentTag[];
   permalink: string;
 };
@@ -47,7 +48,7 @@ export type ProjectDetail = {
   role: string;
   tools: readonly string[];
   links: readonly ProjectLink[];
-  code: string;
+  MdxComponent: CompiledMdxComponent;
   permalink: string;
 };
 
@@ -72,12 +73,11 @@ export type AboutPage = {
   skills: readonly string[];
   profileLinks: readonly ProfileLink[];
   experience: readonly Experience[];
-  code: string;
+  MdxComponent: CompiledMdxComponent;
 };
 
 export type ContactPage = {
   location: string;
-  email: string;
   profileLinks: readonly ProfileLink[];
-  code: string;
+  MdxComponent: CompiledMdxComponent;
 };

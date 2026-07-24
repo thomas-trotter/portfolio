@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import classNames from "classnames";
 import ProjectCard from "@/components/cards/project-card";
 import Section from "@/components/ui/section";
@@ -13,14 +13,12 @@ import {
 export default function ProjectsGridSection() {
   const [activeFilter, setActiveFilter] = useState<ProjectFilter>("All");
 
-  const filteredProjects = useMemo(() => {
-    if (activeFilter === "All") {
-      return allProjects;
-    }
-    return allProjects.filter((project) => 
-      project.categories.includes(activeFilter)
-    );
-  }, [activeFilter]);
+  const filteredProjects =
+    activeFilter === "All"
+      ? allProjects
+      : allProjects.filter((project) =>
+          project.categories.includes(activeFilter),
+        );
 
   return (
     <Section>

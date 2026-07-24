@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import classNames from "classnames";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import BlogPostListItem from "@/components/cards/blog-post-list-item";
@@ -11,27 +11,18 @@ export default function BlogListSection() {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
 
-  const filteredPosts = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-    if (!normalizedQuery) {
-      return blogPosts;
-    }
-
-    return blogPosts.filter(
-      (post) =>
-        post.title.toLowerCase().includes(normalizedQuery) ||
-        post.excerpt.toLowerCase().includes(normalizedQuery),
-    );
-  }, [query]);
+  const normalizedQuery = query.trim().toLowerCase();
+  const filteredPosts = !normalizedQuery ? blogPosts : blogPosts.filter((post) => 
+          post.title.toLowerCase().includes(normalizedQuery) ||
+          post.excerpt.toLowerCase().includes(normalizedQuery),
+      );
 
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE));
 
   const currentPage = Math.min(page, totalPages);
 
-  const paginatedPosts = useMemo(() => {
-    const start = (currentPage - 1) * POSTS_PER_PAGE;
-    return filteredPosts.slice(start, start + POSTS_PER_PAGE);
-  }, [currentPage, filteredPosts]);
+  const start = (currentPage - 1) * POSTS_PER_PAGE;
+  const paginatedPosts = filteredPosts.slice(start, start + POSTS_PER_PAGE);
 
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
 

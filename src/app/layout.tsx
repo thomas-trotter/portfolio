@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import classNames from "classnames";
 import { rootMetadata } from "@/lib/seo/metadata";
 import "./globals.css";
@@ -34,6 +35,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-dvh flex-col">
         {children}
+        <Analytics />
       </body>
     </html>
   );
